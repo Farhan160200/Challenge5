@@ -51,14 +51,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--    <androidx.appcompat.widget.SearchView-->
-    <!--        android:id="@+id/searchview"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="12dp"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/tv_user"-->
-    <!--        app:queryHint="Search Judul Anda"-->
-    <!--        tools:layout_editor_absoluteX="0dp" />-->
 
     <TextView
         android:id="@+id/tv_user"
@@ -122,8 +114,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewView"
-                    android:layout_width="412dp"
-                    android:layout_height="700dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -159,8 +151,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewPopular"
-                    android:layout_width="412dp"
-                    android:layout_height="700dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -196,8 +188,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewUpComing"
-                    android:layout_width="412dp"
-                    android:layout_height="700dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
