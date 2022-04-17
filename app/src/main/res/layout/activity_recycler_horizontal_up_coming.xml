@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="2dp"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="160dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="0dp">
+
+        <ImageView
+            android:id="@+id/iv_image_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_undraw_working_late_pukg"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:alpha="0.7"
+            android:backgroundTint="@color/black">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Top Rated"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:layout_marginStart="5dp"-->
+        <!--            android:layout_marginTop="110dp"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:alpha="0.9"-->
+        <!--            android:backgroundTint="@color/black">-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="3dp"-->
+        <!--                android:layout_marginTop="5dp"-->
+        <!--                android:gravity="center_vertical"-->
+        <!--                android:orientation="horizontal">-->
+
+        <!--                <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                    android:layout_width="10dp"-->
+        <!--                    android:layout_height="10dp"-->
+        <!--                    android:src="@drawable/ic_baseline_star_24"-->
+        <!--                    android:tint="#FFEB3B"-->
+        <!--                    android:layout_marginBottom="2dp"/>-->
+
+        <!--                <TextView-->
+
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginStart="2dp"-->
+        <!--                    android:text="@string/kupon_special"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="11sp"-->
+        <!--                    android:layout_marginBottom="2dp"/>-->
+        <!--            </LinearLayout>-->
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:layout_marginBottom="0dp"
+            android:alpha="0.7"
+            android:backgroundTint="@color/black">
+            android:elevation="5dp"
+            android:paddingHorizontal="10dp"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+
+                <TextView
+                    android:id="@+id/tv_Judul_horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_marginVertical="1dp"
+                    android:text="Judul"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="13sp" />
+
+
+                <!--                <TextView-->
+                <!--                    -->
+                <!--                    android:layout_marginHorizontal="10dp"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="2dp"-->
+                <!--                    android:text="uchi Store"-->
+                <!--                    android:textSize="9dp" />-->
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+                <!--                        android:layout_width="10dp"-->
+                <!--                        android:layout_height="10dp"-->
+                <!--                        android:src="@drawable/ic_baseline_star_24"-->
+                <!--                        android:tint="#FFEB3B" />-->
+
+
+                <!--                </LinearLayout>-->
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,34 +1,33 @@
-package com.farhanfarkaann.challenge5
+package com.farhanfarkaann.challenge5.adapter
 
-import android.os.Parcel
-
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerBinding
-import com.farhanfarkaann.challenge5.model.Result
+import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalBinding
+import com.farhanfarkaann.challenge5.model_TopRated.Result
 
 
-class MoviesAdapter(private val onClick:(Result)->Unit)
-    : ListAdapter<Result, MoviesAdapter.ViewHolder>(ResultComparator()){
+class MoviesTopRatedAdapter(private val onClick:(Result)->Unit) : ListAdapter<Result, MoviesTopRatedAdapter.ViewHolder>(
+    ResultComparator()
+) {
 
 
-    class ViewHolder(private val binding: ActivityRecyclerBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ActivityRecyclerHorizontalBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(currentResult: Result,
-                 onClick: (Result) -> Unit){
+        fun bind(
+            currentResult: Result,
+            onClick: (Result) -> Unit
+        ){
 
             binding.apply {
-                tvJudul.text = currentResult.title
-                tvTahun.text = currentResult.popularity.toString()
-                tvSinopsis.text = currentResult.overview
-                Glide.with(binding.tvImage).load("https://image.tmdb.org/t/p/w500"+currentResult.posterPath).into(binding.tvImage)
+                tvJudulHorizontal.text = currentResult.title
+//                tvTahun.text = currentResult.popularity.toString()
+//                tvSinopsis.text = currentResult.overview
+                Glide.with(binding.ivImageHorizontal).load("https://image.tmdb.org/t/p/w500"+currentResult.posterPath).into(binding.ivImageHorizontal)
                 root.setOnClickListener{
                     onClick(currentResult)
 
@@ -38,6 +37,9 @@ class MoviesAdapter(private val onClick:(Result)->Unit)
         }
 
     }
+
+
+
 
     class ResultComparator : DiffUtil.ItemCallback<Result>() {
         override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
@@ -51,7 +53,7 @@ class MoviesAdapter(private val onClick:(Result)->Unit)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ActivityRecyclerBinding.inflate(
+        val binding = ActivityRecyclerHorizontalBinding.inflate(
             LayoutInflater.from(parent.context),parent,false)
 
         return ViewHolder(binding)

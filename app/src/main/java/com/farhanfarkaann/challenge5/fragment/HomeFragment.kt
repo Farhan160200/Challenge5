@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.farhanfarkaann.challenge5.MainViewModel
-import com.farhanfarkaann.challenge5.MoviesAdapter
+import com.farhanfarkaann.challenge5.adapter.MoviesTopRatedAdapter
+import com.farhanfarkaann.challenge5.adapter.MoviesPopularAdapter
+import com.farhanfarkaann.challenge5.adapter.MoviesUpComingAdapter
 import com.farhanfarkaann.challenge5.databinding.FragmentHomeBinding
-import com.farhanfarkaann.challenge5.model.Result
+import com.farhanfarkaann.challenge5.model_Popular.ResultPopular
+import com.farhanfarkaann.challenge5.model_TopRated.Result
+import com.farhanfarkaann.challenge5.model_UpComing.ResultUpComing
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -48,7 +51,14 @@ class HomeFragment : Fragment() {
         val username = prefFile.getString("USERNAME", "")
         binding.tvUser.setText(username)
 
-        recyclerViewView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+        recyclerViewView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+
+        recyclerViewPopular.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+
+        recyclerViewUpComing.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+
+
+
 
         mainViewModel.isLoading.observe(viewLifecycleOwner){
             if (it){
@@ -60,14 +70,38 @@ class HomeFragment : Fragment() {
         mainViewModel.dataMovies.observe(viewLifecycleOwner) {
             showListMovie(it.results)
         }
+        mainViewModel.dataMoviesPopular.observe(viewLifecycleOwner) {
+            showListMoviePopular(it.results)
+        }
+        mainViewModel.dataMoviesUpcoming.observe(viewLifecycleOwner) {
+            showListMovieUpcoming(it.results)
+        }
     }
+
+    private fun showListMoviePopular(results : List <ResultPopular>?) {
+        val adapter = MoviesPopularAdapter {
+
+        }
+        adapter.submitList(results)
+        binding.recyclerViewPopular.adapter = adapter
+    }
+
     private fun showListMovie(results: List<Result>?) {
-        val adapter= MoviesAdapter {
+        val adapter= MoviesTopRatedAdapter {
 
         }
         adapter.submitList(results)
         binding.recyclerViewView.adapter = adapter
     }
+
+    private fun showListMovieUpcoming(results: List<ResultUpComing>?) {
+        val adapter= MoviesUpComingAdapter {
+
+        }
+        adapter.submitList(results)
+        binding.recyclerViewUpComing.adapter = adapter
+    }
+
 
 
 }
