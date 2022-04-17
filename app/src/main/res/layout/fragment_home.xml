@@ -8,7 +8,6 @@
     tools:context=".fragment.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/back"
@@ -19,7 +18,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/ic_undraw_working_late_pukg"
-            android:visibility="gone"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,12 +89,26 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_user">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_user">
+
+
             <TextView
                 android:id="@+id/tv_top_rated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="TopRated"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -190,6 +203,7 @@
                     android:id="@+id/recyclerViewUpComing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="55dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -200,6 +214,10 @@
                     app:layout_constraintVertical_bias="0.0"
                     tools:listitem="@layout/activity_recycler_horizontal" />
             </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 
 
 
