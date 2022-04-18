@@ -30,6 +30,8 @@ class HomeFragment : Fragment() {
 
     companion object {
         const val ID = "ID"
+        const val ID3 = "ID2"
+        const val ID2 = "ID2"
     }
 
 //    private var mDB : MoviesDatabase? = null
@@ -75,46 +77,46 @@ class HomeFragment : Fragment() {
             }
         }
         mainViewModel.dataMovies.observe(viewLifecycleOwner) {
-            showListDetail(it.results)
+            showListDetailTopRated(it.results)
         }
         mainViewModel.dataMoviesPopular.observe(viewLifecycleOwner) {
-            showListMoviePopular(it.results)
+            showListDetailPopular(it.results)
         }
         mainViewModel.dataMoviesUpcoming.observe(viewLifecycleOwner) {
-            showListMovieUpcoming(it.results)
+            showListDetailUpComing(it.results)
         }
-
-        mainViewModel.detailMovieTopRated.observe(viewLifecycleOwner){
-            Toast.makeText(context, it.originalTitle, Toast.LENGTH_SHORT).show()
-        }
-
     }
 
-    private fun showListMoviePopular(results : List <ResultPopular>?) {
-        val adapter = MoviesPopularAdapter {
 
-        }
-        adapter.submitList(results)
-        binding.recyclerViewPopular.adapter = adapter
-    }
+//    private fun showListMoviePopular(results : List <ResultPopular>?) {
+//        val adapter = MoviesPopularAdapter {
+//
+//        }
+//        adapter.submitList(results)
+//        binding.recyclerViewPopular.adapter = adapter
+//    }
 
-    private fun showListMovie(results: List<Result>?) {
-        val adapter= MoviesTopRatedAdapter {
+//    private fun showListMovie(results: List<Result>?) {
+//        val adapter= MoviesTopRatedAdapter {
+//
+//        }
+//        adapter.submitList(results)
+//        binding.recyclerViewView.adapter = adapter
+//    }
 
-        }
-        adapter.submitList(results)
-        binding.recyclerViewView.adapter = adapter
-    }
+//    private fun showListMovieUpcoming(results: List<ResultUpComing>?) {
+//        val adapter= MoviesUpComingAdapter {
+//
+//        }
+//        adapter.submitList(results)
+//        binding.recyclerViewUpComing.adapter = adapter
+//    }
 
-    private fun showListMovieUpcoming(results: List<ResultUpComing>?) {
-        val adapter= MoviesUpComingAdapter {
 
-        }
-        adapter.submitList(results)
-        binding.recyclerViewUpComing.adapter = adapter
-    }
 
-    private fun showListDetail(results: List<Result>?) {
+
+
+    private fun showListDetailTopRated(results: List<Result>?) {
 
 
         val adapter= MoviesTopRatedAdapter {
@@ -126,6 +128,34 @@ class HomeFragment : Fragment() {
         }
         adapter.submitList(results)
         binding.recyclerViewView.adapter = adapter
+    }
+
+    private fun showListDetailPopular(results: List<ResultPopular>?) {
+
+
+        val adapter= MoviesPopularAdapter {
+            val mBundle = Bundle()
+            mBundle.putInt( ID2 ,it.id)
+            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
+//            mainViewModel.getDetailMovies(it.id)
+
+        }
+        adapter.submitList(results)
+        binding.recyclerViewPopular.adapter = adapter
+    }
+
+    private fun showListDetailUpComing(results: List<ResultUpComing>?) {
+
+
+        val adapter= MoviesUpComingAdapter {
+            val mBundle = Bundle()
+            mBundle.putInt( ID3 ,it.id)
+            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
+//            mainViewModel.getDetailMovies(it.id)
+
+        }
+        adapter.submitList(results)
+        binding.recyclerViewUpComing.adapter = adapter
     }
 
 

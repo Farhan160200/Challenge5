@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.farhanfarkaann.challenge5.MainViewModel
 import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID
+import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID2
+import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID3
 
 class DetailFragment : Fragment() {
      private lateinit var _binding: FragmentDetailBinding
@@ -38,8 +40,10 @@ class DetailFragment : Fragment() {
         val bundle = arguments
 
         val id = bundle?.getInt(ID)
+        val z = bundle?.getInt(ID2)
+        val idUpComing = bundle?.getInt(ID3)
 
-        mainViewModel.detailMovieTopRated.observe(viewLifecycleOwner){
+        mainViewModel.detailMovie.observe(viewLifecycleOwner){
             Glide.with(binding.ivImage)
                 .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
                 .into(binding.ivImage)
@@ -48,7 +52,31 @@ class DetailFragment : Fragment() {
             binding.tvOverviewDetail.text = it.overview
             binding.tvReleaseDate.text = it.releaseDate
         }
+//        mainViewModel.detailMovie.observe(viewLifecycleOwner){
+//            Glide.with(binding.ivImage)
+//                .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
+//                .into(binding.ivImage)
+//            binding.tvPopularityDetail.text = "Popularity " + it.popularity.toString()
+//            binding.tvJudulDetail.text = it.title
+//            binding.tvOverviewDetail.text = it.overview
+//            binding.tvReleaseDate.text = it.releaseDate
+//        }
+//        mainViewModel.detailMovie.observe(viewLifecycleOwner){
+//            Glide.with(binding.ivImage)
+//                .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
+//                .into(binding.ivImage)
+//            binding.tvPopularityDetail.text = "Popularity " + it.popularity.toString()
+//            binding.tvJudulDetail.text = it.title
+//            binding.tvOverviewDetail.text = it.overview
+//            binding.tvReleaseDate.text = it.releaseDate
+//        }
+
+
+
+        mainViewModel.getDetailMovies(z!!)
+        mainViewModel.getDetailMovies(idUpComing!!)
         mainViewModel.getDetailMovies(id!!)
+
 
 
     }

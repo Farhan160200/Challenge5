@@ -32,9 +32,9 @@ class MainViewModel : ViewModel()  {
         }
     }
     val isLoadingDetail = MutableLiveData<Boolean>()
-    private val _detailMovieTopRated: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
+    private val _detailMovie: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
     val errorDetail: MutableLiveData<String> = MutableLiveData()
-    val detailMovieTopRated: LiveData<DetailMoviesResponse> = _detailMovieTopRated
+    val detailMovie: LiveData<DetailMoviesResponse> = _detailMovie
 
 
 
@@ -131,7 +131,7 @@ class MainViewModel : ViewModel()  {
             override fun onResponse(call: Call<DetailMoviesResponse>, response: Response<DetailMoviesResponse>) {
                 isLoading.postValue(false)
                 if (response.code() == 200){
-                    _detailMovieTopRated.postValue(response.body())
+                    _detailMovie.postValue(response.body())
                 }else{
                     errorDetail.postValue("Error")
                 }
