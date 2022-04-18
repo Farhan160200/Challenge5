@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.farhanfarkaann.challenge5.MainViewModel
+import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.adapter.MoviesTopRatedAdapter
 import com.farhanfarkaann.challenge5.adapter.MoviesPopularAdapter
 import com.farhanfarkaann.challenge5.adapter.MoviesUpComingAdapter
@@ -24,6 +27,10 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by viewModels()
+
+    companion object {
+        const val ID = "ID"
+    }
 
 //    private var mDB : MoviesDatabase? = null
 
@@ -68,7 +75,7 @@ class HomeFragment : Fragment() {
             }
         }
         mainViewModel.dataMovies.observe(viewLifecycleOwner) {
-            showListMovie(it.results)
+            showListDetail(it.results)
         }
         mainViewModel.dataMoviesPopular.observe(viewLifecycleOwner) {
             showListMoviePopular(it.results)
@@ -76,6 +83,11 @@ class HomeFragment : Fragment() {
         mainViewModel.dataMoviesUpcoming.observe(viewLifecycleOwner) {
             showListMovieUpcoming(it.results)
         }
+
+        mainViewModel.detailMovieTopRated.observe(viewLifecycleOwner){
+            Toast.makeText(context, it.originalTitle, Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun showListMoviePopular(results : List <ResultPopular>?) {
@@ -100,6 +112,20 @@ class HomeFragment : Fragment() {
         }
         adapter.submitList(results)
         binding.recyclerViewUpComing.adapter = adapter
+    }
+
+    private fun showListDetail(results: List<Result>?) {
+
+
+        val adapter= MoviesTopRatedAdapter {
+            val mBundle = Bundle()
+            mBundle.putInt( ID ,it.id)
+            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
+//            mainViewModel.getDetailMovies(it.id)
+
+        }
+        adapter.submitList(results)
+        binding.recyclerViewView.adapter = adapter
     }
 
 

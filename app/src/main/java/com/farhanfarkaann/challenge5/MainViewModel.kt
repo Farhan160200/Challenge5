@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.farhanfarkaann.challenge5.model_Popular.GetMoviesPopular
 import com.farhanfarkaann.challenge5.model_TopRated.GetAllMovies
 import com.farhanfarkaann.challenge5.model_UpComing.GetMoviesUpComing
+import com.farhanfarkaann.challenge5.model_detail.DetailMoviesResponse
 import com.farhanfarkaann.challenge5.service.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +31,10 @@ class MainViewModel : ViewModel()  {
             getAllMoviesUpcoming()
         }
     }
+    val isLoadingDetail = MutableLiveData<Boolean>()
+    private val _detailMovieTopRated: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
+    val errorDetail: MutableLiveData<String> = MutableLiveData()
+    val detailMovieTopRated: LiveData<DetailMoviesResponse> = _detailMovieTopRated
 
 
 
@@ -49,6 +54,7 @@ class MainViewModel : ViewModel()  {
             ) {
                 isLoading.postValue(false )
                 val body = response.body()
+
                 if (response.code()==200)   {
                     _dataMovieUpComing.postValue(body)
                 } else {
@@ -118,6 +124,26 @@ class MainViewModel : ViewModel()  {
         }
         )
     }
+
+    fun getDetailMovies(id: Int){
+        isLoadingDetail.postValue(true)
+        ApiClient.instance.getDetailMovie(id).enqueue(object : Callback<DetailMoviesResponse> {
+            override fun onResponse(call: Call<DetailMoviesResponse>, response: Response<DetailMoviesResponse>) {
+                isLoading.postValue(false)
+                if (response.code() == 200){
+                    _detailMovieTopRated.postValue(response.body())
+                }else{
+                    errorDetail.postValue("Error")
+                }
+            }
+
+            override fun onFailure(call: Call<DetailMoviesResponse>, t: Throwable) {
+                isLoadingDetail.postValue(false)
+            }
+        })
+    }
+
+
 
 }
 

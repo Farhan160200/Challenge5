@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalBinding
 import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalUpComingBinding
 import com.farhanfarkaann.challenge5.model_TopRated.Result
 import com.farhanfarkaann.challenge5.model_UpComing.ResultUpComing
@@ -26,8 +25,6 @@ class MoviesUpComingAdapter(private val onClick3:(ResultUpComing)->Unit) : ListA
 
             binding.apply {
                 tvJudulHorizontal.text = currentResult.title
-//                tvTahun.text = currentResult.popularity.toString()
-//                tvSinopsis.text = currentResult.overview
                 Glide.with(binding.ivImageHorizontal).load("https://image.tmdb.org/t/p/w500"+currentResult.posterPath).into(binding.ivImageHorizontal)
                 root.setOnClickListener{
                     onClick(currentResult)

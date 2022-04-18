@@ -22,8 +22,7 @@ class MoviesPopularAdapter(private val onClick2:(ResultPopular)->Unit) : ListAda
 
             binding.apply {
                 tvJudulHorizontal.text = currentResult.title
-//                tvTahun.text = currentResult.popularity.toString()
-//                tvSinopsis.text = currentResult.overview
+
                 Glide.with(binding.ivImageHorizontal).load("https://image.tmdb.org/t/p/w500"+currentResult.posterPath).into(binding.ivImageHorizontal)
                 root.setOnClickListener{
                     onClick(currentResult)
