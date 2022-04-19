@@ -70,7 +70,7 @@ class DetailFragment : Fragment() {
 //            binding.tvOverviewDetail.text = it.overview
 //            binding.tvReleaseDate.text = it.releaseDate
 //        }
-
+//
 
 
         mainViewModel.getDetailMovies(z!!)

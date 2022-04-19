@@ -46,11 +46,11 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
     <EditText
-        android:id="@+id/et_new_name"
+        android:id="@+id/et_new_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Nama Lengkap"
+        android:hint="Email"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,19 +58,19 @@
         app:layout_constraintTop_toBottomOf="@+id/et_new_username" />
 
     <EditText
-        android:id="@+id/et_new_email"
+        android:id="@+id/et_new_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Nama Lengkap"
+        android:hint="password"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_name" />
+        app:layout_constraintTop_toBottomOf="@+id/et_new_email" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_back"
+        android:id="@+id/btn_update_profile"
         android:layout_width="308dp"
         android:layout_height="46dp"
         android:layout_marginBottom="200dp"
@@ -78,6 +78,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back_home"
+        android:layout_width="308dp"
+        android:layout_height="46dp"
+        android:text="Logout"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_update_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

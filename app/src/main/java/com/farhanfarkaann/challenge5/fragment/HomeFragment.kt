@@ -1,5 +1,6 @@
 package com.farhanfarkaann.challenge5.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -59,6 +60,12 @@ class HomeFragment : Fragment() {
         prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         val username = prefFile.getString("USERNAME", "")
         binding.tvUser.setText(username)
+
+
+
+        binding.btnLogout.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
 
         recyclerViewView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
 
