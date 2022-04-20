@@ -12,6 +12,7 @@ import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID2
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID3
+import kotlin.math.ln
 
 class DetailFragment : Fragment() {
      private lateinit var _binding: FragmentDetailBinding
@@ -43,14 +44,49 @@ class DetailFragment : Fragment() {
         val z = bundle?.getInt(ID2)
         val idUpComing = bundle?.getInt(ID3)
 
+        mainViewModel.isLoading.observe(viewLifecycleOwner){
+            if (it){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+
         mainViewModel.detailMovie.observe(viewLifecycleOwner){
+            val genre = arrayListOf<String>()
+            val country = arrayListOf<String>()
+            val compLogos = arrayListOf<String>()
+
             Glide.with(binding.ivImage)
                 .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
                 .into(binding.ivImage)
-            binding.tvPopularityDetail.text = "Popularity " + it.popularity.toString()
+            binding.tvPopularityDetail.text = "Popularity: " + it.popularity.toString()
             binding.tvJudulDetail.text = it.title
             binding.tvOverviewDetail.text = it.overview
-            binding.tvReleaseDate.text = it.releaseDate
+
+            it.genres.forEach {
+                genre.add(it.name)
+            }
+            it.productionCompanies.forEach {
+                country.add(it.name)
+                country.add(it.originCountry)
+            }
+            it.productionCompanies.forEach {
+               compLogos.add(it.logoPath)
+//                Glide.with(this)
+//                    .load( "https://image.tmdb.org/t/p/w500"+ compLogos.add(it.logoPath).toString())
+//                    .into(binding.ivProductionLogo)
+            }
+
+            binding.tvGenreDetail.text =  genre.joinToString()
+            binding.tvReleaseDate.text = "Released Date: " + it.releaseDate
+            binding.tvProductionComp.text = "Production: ${country.joinToString()}"
+            Glide.with(this)
+                .load( "https://image.tmdb.org/t/p/w500"+ compLogos.joinToString())
+                .into(binding.ivProductionLogo)
+
+
+
         }
 //        mainViewModel.detailMovie.observe(viewLifecycleOwner){
 //            Glide.with(binding.ivImage)
@@ -76,7 +112,6 @@ class DetailFragment : Fragment() {
         mainViewModel.getDetailMovies(z!!)
         mainViewModel.getDetailMovies(idUpComing!!)
         mainViewModel.getDetailMovies(id!!)
-
 
 
     }

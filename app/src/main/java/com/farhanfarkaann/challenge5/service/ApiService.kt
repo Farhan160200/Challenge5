@@ -22,6 +22,4 @@ interface ApiService {
     fun getDetailMovie(@Path("id") id: Int): Call<DetailMoviesResponse>
 
 
-
-
 }

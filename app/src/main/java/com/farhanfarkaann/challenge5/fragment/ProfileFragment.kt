@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
             myEdit.putString("NEWEMAIL",emailIsi)
             myEdit.putString("PASSWORD",password)
             myEdit.commit()
+            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
 
         }

@@ -94,7 +94,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
 //    private fun showListMoviePopular(results : List <ResultPopular>?) {
 //        val adapter = MoviesPopularAdapter {
 //
@@ -118,8 +117,6 @@ class HomeFragment : Fragment() {
 //        adapter.submitList(results)
 //        binding.recyclerViewUpComing.adapter = adapter
 //    }
-
-
 
 
 
@@ -164,7 +161,6 @@ class HomeFragment : Fragment() {
         adapter.submitList(results)
         binding.recyclerViewUpComing.adapter = adapter
     }
-
 
 
 }
