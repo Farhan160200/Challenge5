@@ -73,17 +73,14 @@ class DetailFragment : Fragment() {
             }
             it.productionCompanies.forEach {
                compLogos.add(it.logoPath)
-//                Glide.with(this)
-//                    .load( "https://image.tmdb.org/t/p/w500"+ compLogos.add(it.logoPath).toString())
-//                    .into(binding.ivProductionLogo)
             }
 
-            binding.tvGenreDetail.text =  genre.joinToString()
+            binding.tvGenreDetail.text =  "Genre: " + genre.joinToString()
             binding.tvReleaseDate.text = "Released Date: " + it.releaseDate
             binding.tvProductionComp.text = "Production: ${country.joinToString()}"
-            Glide.with(this)
-                .load( "https://image.tmdb.org/t/p/w500"+ compLogos.joinToString())
-                .into(binding.ivProductionLogo)
+//            Glide.with(this)
+//                .load( "https://image.tmdb.org/t/p/w500"+ compLogos.joinToString())
+//                .into(binding.ivProductionLogo)
 
 
 

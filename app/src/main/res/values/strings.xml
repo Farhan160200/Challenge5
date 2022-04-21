@@ -30,4 +30,5 @@
     <string name="username">USERNAME</string>
     <string name="logout">LOGOUT</string>
     <string name="judul_film2">Judul Film</string>
+    <string name="idlik">IDLIK</string>
 </resources>

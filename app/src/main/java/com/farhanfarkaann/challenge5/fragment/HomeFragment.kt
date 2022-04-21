@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         const val ID2 = "ID2"
     }
 
-//    private var mDB : MoviesDatabase? = null
 
     lateinit var prefFile : SharedPreferences
 
@@ -50,10 +49,6 @@ class HomeFragment : Fragment() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        fetchData()
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,31 +89,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun showListMoviePopular(results : List <ResultPopular>?) {
-//        val adapter = MoviesPopularAdapter {
-//
-//        }
-//        adapter.submitList(results)
-//        binding.recyclerViewPopular.adapter = adapter
-//    }
-
-//    private fun showListMovie(results: List<Result>?) {
-//        val adapter= MoviesTopRatedAdapter {
-//
-//        }
-//        adapter.submitList(results)
-//        binding.recyclerViewView.adapter = adapter
-//    }
-
-//    private fun showListMovieUpcoming(results: List<ResultUpComing>?) {
-//        val adapter= MoviesUpComingAdapter {
-//
-//        }
-//        adapter.submitList(results)
-//        binding.recyclerViewUpComing.adapter = adapter
-//    }
-
-
 
     private fun showListDetailTopRated(results: List<Result>?) {
 
@@ -127,7 +97,6 @@ class HomeFragment : Fragment() {
             val mBundle = Bundle()
             mBundle.putInt( ID ,it.id)
             findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
-//            mainViewModel.getDetailMovies(it.id)
 
         }
         adapter.submitList(results)
@@ -141,7 +110,6 @@ class HomeFragment : Fragment() {
             val mBundle = Bundle()
             mBundle.putInt( ID2 ,it.id)
             findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
-//            mainViewModel.getDetailMovies(it.id)
 
         }
         adapter.submitList(results)
@@ -155,7 +123,6 @@ class HomeFragment : Fragment() {
             val mBundle = Bundle()
             mBundle.putInt( ID3 ,it.id)
             findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
-//            mainViewModel.getDetailMovies(it.id)
 
         }
         adapter.submitList(results)
