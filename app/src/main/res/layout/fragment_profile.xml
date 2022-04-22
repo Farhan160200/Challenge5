@@ -33,42 +33,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_idlik" />
 
 
-<!--    <EditText-->
-<!--        android:id="@+id/et_new_username"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="33dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:hint="Username"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/et_new_email"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:hint="Email"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/et_new_username" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/et_new_password"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:hint="password"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/et_new_email" />-->
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:text=" Edit Profile"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tf_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_username"
@@ -78,7 +54,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
         android:hint="Masukan Username Baru"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +63,7 @@
             android:id="@+id/et_new_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +124,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tf_password"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_back_home"

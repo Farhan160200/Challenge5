@@ -14,6 +14,8 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel()  {
     val error: MutableLiveData<String> = MutableLiveData()
+    val isLoadingDetail = MutableLiveData<Boolean>()
+    val errorDetail: MutableLiveData<String> = MutableLiveData()
 
     val isLoading = MutableLiveData<Boolean>()
     private val _dataMovieTopRated: MutableLiveData<GetAllMovies> by lazy {
@@ -31,13 +33,10 @@ class MainViewModel : ViewModel()  {
             getAllMoviesUpcoming()
         }
     }
-    val isLoadingDetail = MutableLiveData<Boolean>()
+
+
     private val _detailMovie: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
-    val errorDetail: MutableLiveData<String> = MutableLiveData()
     val detailMovie: LiveData<DetailMoviesResponse> = _detailMovie
-
-
-
 
     val dataMovies : LiveData<GetAllMovies> = _dataMovieTopRated
     val dataMoviesPopular : LiveData<GetMoviesPopular> = _dataMoviePoPular

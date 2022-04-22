@@ -1,5 +1,6 @@
 package com.farhanfarkaann.challenge5.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,34 +80,11 @@ class DetailFragment : Fragment() {
             binding.tvGenreDetail.text =  "Genre: " + genre.joinToString()
             binding.tvReleaseDate.text = "Released Date: " + it.releaseDate
             binding.tvProductionComp.text = "Production: ${country.joinToString()}"
-//            Glide.with(this)
-//                .load( "https://image.tmdb.org/t/p/w500"+ compLogos.joinToString())
-//                .into(binding.ivProductionLogo)
+
 
 
 
         }
-//        mainViewModel.detailMovie.observe(viewLifecycleOwner){
-//            Glide.with(binding.ivImage)
-//                .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
-//                .into(binding.ivImage)
-//            binding.tvPopularityDetail.text = "Popularity " + it.popularity.toString()
-//            binding.tvJudulDetail.text = it.title
-//            binding.tvOverviewDetail.text = it.overview
-//            binding.tvReleaseDate.text = it.releaseDate
-//        }
-//        mainViewModel.detailMovie.observe(viewLifecycleOwner){
-//            Glide.with(binding.ivImage)
-//                .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
-//                .into(binding.ivImage)
-//            binding.tvPopularityDetail.text = "Popularity " + it.popularity.toString()
-//            binding.tvJudulDetail.text = it.title
-//            binding.tvOverviewDetail.text = it.overview
-//            binding.tvReleaseDate.text = it.releaseDate
-//        }
-//
-
-
         mainViewModel.getDetailMovies(z!!)
         mainViewModel.getDetailMovies(idUpComing!!)
         mainViewModel.getDetailMovies(id!!)

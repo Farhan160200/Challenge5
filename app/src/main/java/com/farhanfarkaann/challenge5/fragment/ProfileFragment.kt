@@ -64,15 +64,12 @@ class ProfileFragment : Fragment() {
                 myEdit.putBoolean("CHECKBOX",false)
                 myEdit.apply()
 
-//                editor.clear()
-//                editor.apply()
                 Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()
             }.setNegativeButton("Tidak"
             ) { p0, p1 ->
                 p0.dismiss()
             }
                 .setMessage("Apakah Anda Yakin ingin Logout").setTitle("Konfirmasi Logout").create().show()
-//            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
         }
 
 
