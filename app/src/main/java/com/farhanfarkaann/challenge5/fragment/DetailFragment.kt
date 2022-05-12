@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.farhanfarkaann.challenge5.MainViewModel
 import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID2
 import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID3
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlin.math.ln
 
 class DetailFragment : Fragment() {
@@ -54,43 +59,45 @@ class DetailFragment : Fragment() {
             }
         }
 
-        mainViewModel.detailMovie.observe(viewLifecycleOwner){
-            val genre = arrayListOf<String>()
-            val country = arrayListOf<String>()
-            val compLogos = arrayListOf<String>()
+            mainViewModel.detailMovie.observe(viewLifecycleOwner) {
 
-            Glide.with(binding.ivImage)
-                .load("https://image.tmdb.org/t/p/w500"+it.posterPath)
-                .into(binding.ivImage)
-            binding.tvPopularityDetail.text = "Popularity: " + it.popularity.toString()
-            binding.tvJudulDetail.text = it.title
-            binding.tvOverviewDetail.text = it.overview
 
-            it.genres.forEach {
-                genre.add(it.name)
+                val genre = arrayListOf<String>()
+                val country = arrayListOf<String>()
+                val compLogos = arrayListOf<String>()
+
+                Glide.with(binding.ivImage)
+                    .load("https://image.tmdb.org/t/p/w500" + it.posterPath)
+                    .into(binding.ivImage)
+                binding.tvPopularityDetail.text = "Popularity: " + it.popularity.toString()
+                binding.tvJudulDetail.text = it.title
+                binding.tvOverviewDetail.text = it.overview
+
+                it.genres.forEach {
+                    genre.add(it.name)
+                }
+                it.productionCompanies.forEach {
+                    country.add(it.name)
+                    country.add(it.originCountry)
+                }
+                it.productionCompanies.forEach {
+                    compLogos.add(it.logoPath)
+                }
+
+                binding.tvGenreDetail.text = "Genre: " + genre.joinToString()
+                binding.tvReleaseDate.text = "Released Date: " + it.releaseDate
+                binding.tvProductionComp.text = "Production: ${country.joinToString()}"
+
+
             }
-            it.productionCompanies.forEach {
-                country.add(it.name)
-                country.add(it.originCountry)
-            }
-            it.productionCompanies.forEach {
-               compLogos.add(it.logoPath)
-            }
 
-            binding.tvGenreDetail.text =  "Genre: " + genre.joinToString()
-            binding.tvReleaseDate.text = "Released Date: " + it.releaseDate
-            binding.tvProductionComp.text = "Production: ${country.joinToString()}"
-
-
+            mainViewModel.getDetailMovies(z!!)
+            mainViewModel.getDetailMovies(idUpComing!!)
+            mainViewModel.getDetailMovies(id!!)
 
 
         }
-        mainViewModel.getDetailMovies(z!!)
-        mainViewModel.getDetailMovies(idUpComing!!)
-        mainViewModel.getDetailMovies(id!!)
 
-
-    }
 
 
 

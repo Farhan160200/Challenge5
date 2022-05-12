@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.farhanfarkaann.challenge5.MainViewModel
@@ -22,6 +23,10 @@ import com.farhanfarkaann.challenge5.model_Popular.ResultPopular
 import com.farhanfarkaann.challenge5.model_TopRated.Result
 import com.farhanfarkaann.challenge5.model_UpComing.ResultUpComing
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -58,6 +63,8 @@ class HomeFragment : Fragment() {
 
 
 
+
+
         binding.btnLogout.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
@@ -91,43 +98,48 @@ class HomeFragment : Fragment() {
 
 
     private fun showListDetailTopRated(results: List<Result>?) {
+//lifecycleScope.launch(Dispatchers.IO) {
 
 
-        val adapter= MoviesTopRatedAdapter {
-            val mBundle = Bundle()
-            mBundle.putInt( ID ,it.id)
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
+    val adapter = MoviesTopRatedAdapter {
+        val mBundle = Bundle()
+        mBundle.putInt(ID, it.id)
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
 
-        }
-        adapter.submitList(results)
-        binding.recyclerViewView.adapter = adapter
+    }
+    adapter.submitList(results)
+    binding.recyclerViewView.adapter = adapter
+//}
     }
 
     private fun showListDetailPopular(results: List<ResultPopular>?) {
+//       lifecycleScope.launch(Dispatchers.Main){
 
+            val adapter = MoviesPopularAdapter {
+                val mBundle = Bundle()
+                mBundle.putInt(ID2, it.id)
+                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
 
-        val adapter= MoviesPopularAdapter {
-            val mBundle = Bundle()
-            mBundle.putInt( ID2 ,it.id)
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
-
-        }
-        adapter.submitList(results)
-        binding.recyclerViewPopular.adapter = adapter
+            }
+            adapter.submitList(results)
+            binding.recyclerViewPopular.adapter = adapter
+//        }
     }
 
     private fun showListDetailUpComing(results: List<ResultUpComing>?) {
+/*        lifecycleScope.launch(Dispatchers.IO) {*/
 
 
-        val adapter= MoviesUpComingAdapter {
-            val mBundle = Bundle()
-            mBundle.putInt( ID3 ,it.id)
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,mBundle)
+            val adapter = MoviesUpComingAdapter {
+                val mBundle = Bundle()
+                mBundle.putInt(ID3, it.id)
+                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
 
+            }
+            adapter.submitList(results)
+            binding.recyclerViewUpComing.adapter = adapter
         }
-        adapter.submitList(results)
-        binding.recyclerViewUpComing.adapter = adapter
-    }
+//    }
 
 
 }
