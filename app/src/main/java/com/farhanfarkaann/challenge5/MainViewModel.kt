@@ -37,7 +37,6 @@ class MainViewModel : ViewModel()  {
 
     private val _detailMovie: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
     val detailMovie: LiveData<DetailMoviesResponse> = _detailMovie
-
     val dataMovies : LiveData<GetAllMovies> = _dataMovieTopRated
     val dataMoviesPopular : LiveData<GetMoviesPopular> = _dataMoviePoPular
     val dataMoviesUpcoming : LiveData<GetMoviesUpComing> = _dataMovieUpComing

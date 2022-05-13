@@ -10,11 +10,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
+import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.databinding.FragmentRegistBinding
+import kotlinx.coroutines.*
 
 class RegistFragment : Fragment() {
 
-    private lateinit var binding: FragmentRegistBinding
+    private lateinit var _binding: FragmentRegistBinding
+    private val binding get() = _binding!!
+//    private val mainViewModelData: MainViewModelDataStore by viewModels()
     private val sharedPrefFile  = "kotlinsharedpreference"
     companion object{
         const val EMAILISI  = "EMAIL"
@@ -28,52 +32,87 @@ class RegistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegistBinding.inflate(layoutInflater)
+        _binding = FragmentRegistBinding.inflate(layoutInflater)
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        saveToLocal()
+//        lifecycleScope.launchWhenStarted {
+//            mainViewModelData.readFromLocal.collect {
+//                binding.tvIdlik.text =  it.name
+//                binding.tvSignUp.text = "Preference Value email : ${it.email}"
+//            }
+//        }
+//    }
+
+//    private fun saveToLocal() {
+//        binding.apply {
+//            btnDaftar.setOnClickListener {
+//                if (!TextUtils.isEmpty(etUsername.text.toString()) && !TextUtils.isEmpty(etEmail.text.toString()) )
+//
+//                {
+//                    Log.d("main", "saveToLocal: ${tvIdlik.text}")
+//                    Log.d("main", "saveToLocal: ${tvSignUp.text}")
+//                    mainViewModelData.saveToLocal(name = etUsername.text.toString(), email = etEmail.text.toString() )
+//
+//                } else {
+//                    Toast.makeText(context, "fill the field", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
+
+
         val sharedPreferences : SharedPreferences =
             requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         binding.btnDaftar.setOnClickListener {
-            val username : String = binding.etUsername.text.toString()
-            val emailIsi : String = binding.etEmail.text.toString()
-            val password : String  = binding.etPassword.text.toString()
-            val confPassword : String = binding.etConfirmPass.text.toString()
-            val editor : SharedPreferences.Editor = sharedPreferences.edit()
+            GlobalScope.async {
+                val username: String = binding.etUsername.text.toString()
+                val emailIsi: String = binding.etEmail.text.toString()
+                val password: String = binding.etPassword.text.toString()
+                val confPassword: String = binding.etConfirmPass.text.toString()
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-            when{
-                username.isEmpty() -> {
-                    binding.tfUsername.error = getString(com.google.android.material.R.string.error_icon_content_description)
-                }
-                emailIsi.isEmpty() -> {
-                    binding.tfEmail.error = "Tidak Boleh Kosong!"
-                }
-                password.isEmpty() -> {
-                    binding.tfPassword.error = "Tidak Bolek Kosong!"
-                }
-                confPassword.isEmpty() -> {
-                    binding.tfConfirmPass.error = " Tidak Boleh Kosong!"
-                }
-                password != confPassword -> {
-                    Toast.makeText(context, "Password Tidak Sama ", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    editor.putString("USERNAME",username)
-                    editor.putString("EMAILIS",emailIsi)
-                    editor.putString("PASSWORD",password)
-                    editor.putString(CONFPASSWORD, confPassword)
-                    editor.apply()
-                    Toast.makeText(context, "Data Saved", Toast.LENGTH_SHORT).show()
+                runBlocking(Dispatchers.Main) {
+                    when {
+                        username.isEmpty() -> {
+                            binding.tfUsername.error =
+                                getString(com.google.android.material.R.string.error_icon_content_description)
+                        }
+                        emailIsi.isEmpty() -> {
+                            binding.tfEmail.error = "Tidak Boleh Kosong!"
+                        }
+                        password.isEmpty() -> {
+                            binding.tfPassword.error = "Tidak Bolek Kosong!"
+                        }
+                        confPassword.isEmpty() -> {
+                            binding.tfConfirmPass.error = " Tidak Boleh Kosong!"
+                        }
+                        password != confPassword -> {
+                            Toast.makeText(context, "Password Tidak Sama ", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        else -> {
+                            editor.putString("USERNAME", username)
+                            editor.putString("EMAILIS", emailIsi)
+                            editor.putString("PASSWORD", password)
+                            editor.putString(CONFPASSWORD, confPassword)
+                            editor.apply()
+                            Toast.makeText(context, "Data Saved", Toast.LENGTH_SHORT).show()
 
 
-                    findNavController().navigate(R.id.action_registFragment_to_loginFragment)
+                            findNavController().navigate(R.id.action_registFragment_to_loginFragment)
 
+                        }
+                    }
                 }
             }
         }
+
+
     }
 }
