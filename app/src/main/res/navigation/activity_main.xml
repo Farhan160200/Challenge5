@@ -41,6 +41,12 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -53,6 +59,9 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.farhanfarkaann.challenge5.room.entity.User" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

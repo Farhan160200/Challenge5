@@ -23,12 +23,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentProfileBinding
 import com.farhanfarkaann.challenge5.datastore.DataStoreSetting
 import com.farhanfarkaann.challenge5.datastore.dataStore
+import com.farhanfarkaann.challenge5.room.database.UserDatabase
+import com.farhanfarkaann.challenge5.room.entity.User
 import com.farhanfarkaann.challenge5.utils.StorageUtils
+import com.farhanfarkaann.challenge5.viewmodeluser.HomeViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.*
@@ -37,26 +44,36 @@ import java.util.*
 
 
 class ProfileFragment : Fragment() {
-    private lateinit var binding : FragmentProfileBinding
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var dataStoreSetting: DataStoreSetting
     lateinit var prefFile : SharedPreferences
+
+    var myDb: UserDatabase? = null
+    private val args: ProfileFragmentArgs by navArgs()
+    lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var userManager: UserManager
+
+
+
     ///////////////////////////////////////////
 
-    private val cameraResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val bitmap = result.data?.extras?.get("data") as Bitmap
-                val uri = StorageUtils.savePhotoToExternalStorage(
-                    contentResolver = null,
-                    UUID.randomUUID().toString(),
-                    bitmap
-                )
-                uri?.let {
-                    loadImage(it)
-                }
-            }
-        }
+//    private val cameraResult =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                val bitmap = result.data?.extras?.get("data") as Bitmap
+//                val uri = StorageUtils.savePhotoToExternalStorage(
+//                    contentResolver = null,
+//                    UUID.randomUUID().toString(),
+//                    bitmap
+//                )
+//                uri?.let {
+//                    loadImage(it)
+//                }
+//            }
+//        }
 //
 //    private fun loadImage(uri: Uri) {
 //        binding.ivLogo.setImageURI(uri)
@@ -74,7 +91,6 @@ class ProfileFragment : Fragment() {
 
                 }
                 ImagePicker.RESULT_ERROR -> {
-//                    Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
                     Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
                 }
                 else -> {
@@ -89,10 +105,9 @@ class ProfileFragment : Fragment() {
             val uri = result.toString()
             val myEdit: SharedPreferences.Editor = prefFile.edit()
             myEdit.putString("PHOTO",uri)
-            myEdit.apply()
+            myEdit.commit()
             loadImage(result)
         }
-
 
 
 
@@ -102,44 +117,87 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentProfileBinding.inflate(layoutInflater)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataStoreSetting = DataStoreSetting(requireContext().dataStore)
+        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         setClickListeners()
         check()
 
-        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        val username = prefFile.getString("USERNAME", "")
-        val email = prefFile.getString("EMAILIS","")
-        val password = prefFile.getString("PASSWORD","")
+        myDb = UserDatabase.getInstance(requireContext())
+        userManager = UserManager(requireContext())
         val photo = prefFile.getString("PHOTO","")
-
-        binding.ivLogo.isVisible
-
-        binding.etNewUsername.setText(username.toString())
-        binding.etNewEmail.setText(email.toString())
-        binding.etNewPassword.setText(password.toString())
         binding.ivLogo.setImageURI(photo!!.toUri())
-        binding.btnUpdateProfile.setOnClickListener{
 
-            val username : String = binding.etNewUsername.text.toString()
-            val emailIsi : String = binding.etNewEmail.text.toString()
-            val password : String  = binding.etNewPassword.text.toString()
-            val myEdit: SharedPreferences.Editor = prefFile.edit()
-            myEdit.putString("USERNAME",username)
-            myEdit.putString("NEWEMAIL",emailIsi)
-            myEdit.putString("PASSWORD",password)
-            myEdit.commit()
-            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        homeViewModel.getDataUser().observe(viewLifecycleOwner) {
+            binding.etNewUsername.setText(it.username)
+            binding.etNewEmail.setText(it.email)
+            binding.etNewPassword.setText(it.password)
         }
 
+        binding.btnUpdateProfile.setOnClickListener {
+            val user = User(
+                args.user.id,
+                binding.etNewUsername.text.toString(),
+                binding.etNewEmail.text.toString(),
+                binding.etNewPassword.text.toString()
+            )
+            lifecycleScope.launch(Dispatchers.IO) {
+                val photo = prefFile.getString("PHOTO","")
+                val result = myDb?.userDao()?.updateItem(user)
+                runBlocking(Dispatchers.Main) {
+                    binding.ivLogo.setImageURI(photo!!.toUri())
+                    if (result != 0) {
+                        Toast.makeText(
+                            requireContext(), "User berhasil diupdate",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(requireContext(), "User gagal diupdate", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                if (result != 0) {
+                    homeViewModel.setDataUser(user)
+
+                }
+            }
+        }
+
+//        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+//        val username = prefFile.getString("USERNAME", "")
+//        val email = prefFile.getString("EMAILIS","")
+//        val password = prefFile.getString("PASSWORD","")
+//        val photo = prefFile.getString("PHOTO","")
+//
+//        binding.ivLogo.isVisible
+//
+//        binding.etNewUsername.setText(username.toString())
+//        binding.etNewEmail.setText(email.toString())
+//        binding.etNewPassword.setText(password.toString())
+//        binding.ivLogo.setImageURI(photo!!.toUri())
+//        binding.btnUpdateProfile.setOnClickListener{
+//
+//            val username : String = binding.etNewUsername.text.toString()
+//            val emailIsi : String = binding.etNewEmail.text.toString()
+//            val password : String  = binding.etNewPassword.text.toString()
+//            val myEdit: SharedPreferences.Editor = prefFile.edit()
+//            myEdit.putString("USERNAME",username)
+//            myEdit.putString("NEWEMAIL",emailIsi)
+//            myEdit.putString("PASSWORD",password)
+//            myEdit.commit()
+//            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
+//            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+//
+//        }
+
         binding.btnBackHome.setOnClickListener {
+            check()
                 AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
                     findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
 
@@ -167,20 +225,16 @@ class ProfileFragment : Fragment() {
 
     }
     private fun setClickListeners() {
-//        binding.ivLogo.setOnClickListener {
-//            if (ActivityCompat.checkSelfPermission(requireContext()!!,
-//                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                openGallery()
-//            }
-//        }
+
         binding.ivLogo.setOnClickListener {
             openImagePicker()
         }
     }
 
-//    private fun openGallery() {
-//        galleryResult.launch("image/*")
-//    }
+    private fun openGallery() {
+        galleryResult.launch("image/*")
+    }
+
     private fun check() {
 
         //Stores the values
@@ -220,5 +274,10 @@ class ProfileFragment : Fragment() {
 
             binding.ivLogo.setImageURI(it)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,8 @@ import com.farhanfarkaann.challenge5.databinding.FragmentHomeBinding
 import com.farhanfarkaann.challenge5.model_Popular.ResultPopular
 import com.farhanfarkaann.challenge5.model_TopRated.Result
 import com.farhanfarkaann.challenge5.model_UpComing.ResultUpComing
+import com.farhanfarkaann.challenge5.viewmodeluser.HomeViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,6 +36,10 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by viewModels()
+
+    private lateinit var pref: UserManager
+    lateinit var homeViewModel: HomeViewModel
+    private lateinit var userManager: UserManager
 
     companion object {
         const val ID = "ID"
@@ -57,9 +64,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        val username = prefFile.getString("USERNAME", "")
-        binding.tvUser.setText(username)
+//        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+//        val username = prefFile.getString("USERNAME", "")
+//        binding.tvUser.setText(username)
+        pref = UserManager(requireActivity())
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        userManager = UserManager(requireActivity())
+        getUser()
+        homeViewModel.getDataUser().observe(viewLifecycleOwner){
+            binding.tvUser.text = it.username
+        }
 
 
 
@@ -139,7 +153,17 @@ class HomeFragment : Fragment() {
             adapter.submitList(results)
             binding.recyclerViewUpComing.adapter = adapter
         }
+
 //    }
+private fun getUser() {
+    homeViewModel.getDataUser().observe(viewLifecycleOwner){
+        val navigateUpdate =
+            HomeFragmentDirections.actionHomeFragmentToProfileFragment(it)
+        binding.btnLogout.setOnClickListener {
+            findNavController().navigate(navigateUpdate)
+        }
+    }
+}
 
 
 }
