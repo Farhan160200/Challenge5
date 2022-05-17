@@ -1,5 +1,7 @@
 package com.farhanfarkaann.challenge5
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel()  {
+class MainViewModel(application : Application) : AndroidViewModel(application)  {
     val error: MutableLiveData<String> = MutableLiveData()
     val isLoadingDetail = MutableLiveData<Boolean>()
     val errorDetail: MutableLiveData<String> = MutableLiveData()
@@ -45,7 +47,7 @@ class MainViewModel : ViewModel()  {
 
     private fun getAllMoviesUpcoming() {
         isLoading.postValue(true )
-        ApiClient.instance.getMoviesUpComing().enqueue(object : Callback<GetMoviesUpComing>{
+        ApiClient.getInstance(getApplication()).getMoviesUpComing().enqueue(object : Callback<GetMoviesUpComing>{
             override fun onResponse(
                 call: Call<GetMoviesUpComing>,
                 response: Response<GetMoviesUpComing>
@@ -75,7 +77,7 @@ class MainViewModel : ViewModel()  {
 
     private fun getAllMoviesPopular() {
         isLoading.postValue(true )
-        ApiClient.instance.getMoviesPopular().enqueue(object : Callback<GetMoviesPopular>{
+        ApiClient.getInstance(getApplication()).getMoviesPopular().enqueue(object : Callback<GetMoviesPopular>{
             override fun onResponse(
                 call: Call<GetMoviesPopular>,
                 response: Response<GetMoviesPopular>
@@ -101,7 +103,7 @@ class MainViewModel : ViewModel()  {
 
     fun getAllMoviesTopRated(){
         isLoading.postValue(true )
-        ApiClient.instance.getAllMovies().enqueue(object : Callback<GetAllMovies>{
+        ApiClient.getInstance(getApplication()).getAllMovies().enqueue(object : Callback<GetAllMovies>{
             override fun onResponse(
                 call: Call<GetAllMovies>,
                 response: Response<GetAllMovies>
@@ -125,7 +127,7 @@ class MainViewModel : ViewModel()  {
 
     fun getDetailMovies(id: Int){
         isLoadingDetail.postValue(true)
-        ApiClient.instance.getDetailMovie(id).enqueue(object : Callback<DetailMoviesResponse> {
+        ApiClient.getInstance(getApplication()).getDetailMovie(id).enqueue(object : Callback<DetailMoviesResponse> {
             override fun onResponse(call: Call<DetailMoviesResponse>, response: Response<DetailMoviesResponse>) {
                 isLoading.postValue(false)
                 if (response.code() == 200){
