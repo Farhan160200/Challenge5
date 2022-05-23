@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.datastore
+package com.farhanfarkaann.challenge5.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

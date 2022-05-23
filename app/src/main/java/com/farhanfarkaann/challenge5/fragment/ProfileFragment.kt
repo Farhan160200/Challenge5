@@ -1,17 +1,10 @@
 package com.farhanfarkaann.challenge5.fragment
-import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,44 +12,43 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.farhanfarkaann.challenge5.MainViewModel
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentProfileBinding
-import com.farhanfarkaann.challenge5.datastore.DataStoreSetting
-import com.farhanfarkaann.challenge5.datastore.dataStore
+import com.farhanfarkaann.challenge5.data.datastore.DataStoreSetting
+import com.farhanfarkaann.challenge5.data.datastore.dataStore
 import com.farhanfarkaann.challenge5.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.room.entity.User
-import com.farhanfarkaann.challenge5.utils.StorageUtils
+import com.farhanfarkaann.challenge5.ui.UpdateViewModel
 import com.farhanfarkaann.challenge5.viewmodeluser.HomeViewModel
 import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.fragment_login.*
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.io.File
-import java.util.*
 
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
     lateinit var dataStoreSetting: DataStoreSetting
-    lateinit var prefFile : SharedPreferences
+    lateinit var prefFile: SharedPreferences
 
-    var myDb: UserDatabase? = null
     private val args: ProfileFragmentArgs by navArgs()
-    lateinit var homeViewModel: HomeViewModel
+    private val updateViewModel: UpdateViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+
+//    lateinit var homeViewModel: HomeViewModel
 
     private lateinit var userManager: UserManager
-
-
 
     ///////////////////////////////////////////
 
@@ -104,12 +96,10 @@ class ProfileFragment : Fragment() {
             prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
             val uri = result.toString()
             val myEdit: SharedPreferences.Editor = prefFile.edit()
-            myEdit.putString("PHOTO",uri)
+            myEdit.putString("PHOTO", uri)
             myEdit.commit()
             loadImage(result)
         }
-
-
 
 
     ///////////////////////////////////
@@ -123,51 +113,64 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateViewModel.getDataUser()
+        mainViewModel.getDataUser()
         dataStoreSetting = DataStoreSetting(requireContext().dataStore)
         prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         setClickListeners()
-        check()
+        logoutLogin()
 
-        myDb = UserDatabase.getInstance(requireContext())
         userManager = UserManager(requireContext())
-        val photo = prefFile.getString("PHOTO","")
+        val photo = prefFile.getString("PHOTO", "")
         binding.ivLogo.setImageURI(photo!!.toUri())
 
-        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        homeViewModel.getDataUser().observe(viewLifecycleOwner) {
+//        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        updateViewModel.user.observe(viewLifecycleOwner) {
             binding.etNewUsername.setText(it.username)
             binding.etNewEmail.setText(it.email)
             binding.etNewPassword.setText(it.password)
         }
+        updateUser()
+        logout()
+    }
 
+    private fun logout() {
+        binding.btnBackHome.setOnClickListener {
+            val dialogKonfirmasi = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            dialogKonfirmasi.apply {
+                setTitle("Logout")
+                setMessage("Apakah anda yakin ingin log out?")
+                setNegativeButton("Batal") { dialog, which ->
+                    dialog.dismiss()
+                }
+                setPositiveButton("Ya") { dialog, which ->
+                    dialog.dismiss()
+                    mainViewModel.deleteUserPref()
+                    mainViewModel.user.observe(viewLifecycleOwner) {
+                            findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
+                    }
+                }
+            }
+            dialogKonfirmasi.show()
+        }
+    }
+
+    private fun updateUser() {
         binding.btnUpdateProfile.setOnClickListener {
             val user = User(
                 args.user.id,
                 binding.etNewUsername.text.toString(),
                 binding.etNewEmail.text.toString(),
-                binding.etNewPassword.text.toString()
+                binding.etNewPassword.text.toString(),
             )
-            lifecycleScope.launch(Dispatchers.IO) {
-                val photo = prefFile.getString("PHOTO","")
-                val result = myDb?.userDao()?.updateItem(user)
-                runBlocking(Dispatchers.Main) {
-                    binding.ivLogo.setImageURI(photo!!.toUri())
-                    if (result != 0) {
-                        Toast.makeText(
-                            requireContext(), "User berhasil diupdate",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(requireContext(), "User gagal diupdate", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-                if (result != 0) {
-                    homeViewModel.setDataUser(user)
-
-                }
-            }
+            updateViewModel.update(user)
+            updateViewModel.setDataUser(user)
+            updateViewModel.getDataUser()
+            observeUpdate()
         }
+    }
+
+
 
 //        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 //        val username = prefFile.getString("USERNAME", "")
@@ -196,34 +199,53 @@ class ProfileFragment : Fragment() {
 //
 //        }
 
-        binding.btnBackHome.setOnClickListener {
-            check()
-                AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
-                    findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
-
-                    val myEdit: SharedPreferences.Editor = prefFile.edit()
-                    myEdit.putBoolean("CHECKBOX", false)
-                    myEdit.apply()
-
-
-                    Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()
-                }
-                    .setNegativeButton(
-                        "Tidak"
-                    ) { p0, p1 ->
-                        p0.dismiss()
-
-                    }
-                    .setMessage("Apakah Anda Yakin ingin Logout").setTitle("Konfirmasi Logout")
-                    .create().show()
-
-
+private fun observeUpdate() {
+    updateViewModel.resultUpdate.observe(viewLifecycleOwner) {
+        if (it != null) {
+            if (it != 0) {
+                Toast.makeText(
+                    requireContext(), "User berhasil diupdate",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(requireContext(), "User gagal diupdate", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
+    }
 
+    }
+private fun logoutLogin() {
+    binding.btnBackHome.setOnClickListener {
+        check()
+        AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
+            findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
+
+            val myEdit: SharedPreferences.Editor = prefFile.edit()
+            myEdit.putBoolean("CHECKBOX", false)
+            myEdit.apply()
+
+
+            Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()
+        }
+            .setNegativeButton(
+                "Tidak"
+            ) { p0, p1 ->
+                p0.dismiss()
+
+            }
+            .setMessage("Apakah Anda Yakin ingin Logout").setTitle("Konfirmasi Logout")
+            .create().show()
 
 
     }
+}
+
+
+
+
+
     private fun setClickListeners() {
 
         binding.ivLogo.setOnClickListener {

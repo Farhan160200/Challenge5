@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalUpComingBinding
-import com.farhanfarkaann.challenge5.model_TopRated.Result
-import com.farhanfarkaann.challenge5.model_UpComing.ResultUpComing
+import com.farhanfarkaann.challenge5.data.api.model.model_UpComing.ResultUpComing
 
 class MoviesUpComingAdapter(private val onClick3:(ResultUpComing)->Unit) : ListAdapter<ResultUpComing, MoviesUpComingAdapter.ViewHolder3>(
     ResultComparator()

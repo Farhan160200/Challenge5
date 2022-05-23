@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.model_TopRated
+package com.farhanfarkaann.challenge5.data.api.model.model_TopRated
 
 
 import com.google.gson.annotations.SerializedName

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalTopRatedBinding
-import com.farhanfarkaann.challenge5.model_TopRated.Result
+import com.farhanfarkaann.challenge5.data.api.model.model_TopRated.Result
 
 
 class MoviesTopRatedAdapter(private val onClick:(Result)->Unit) : ListAdapter<Result, MoviesTopRatedAdapter.ViewHolder>(

@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.model_UpComing
+package com.farhanfarkaann.challenge5.data.api.model.model_UpComing
 
 
 import com.google.gson.annotations.SerializedName

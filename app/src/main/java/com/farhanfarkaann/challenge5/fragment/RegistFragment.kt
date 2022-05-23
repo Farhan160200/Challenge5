@@ -8,19 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.databinding.FragmentRegistBinding
 import com.farhanfarkaann.challenge5.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class RegistFragment : Fragment() {
-    private var myDb: UserDatabase? = null
+
     private var _binding: FragmentRegistBinding ? = null
     private val binding get() = _binding!!
-    private val sharedPrefFile  = "kotlinsharedpreference"
+    private val authViewModel : AuthViewModel by viewModels()
     companion object{
         const val   CONFPASSWORD = "CONFPASSWORD"
     }
@@ -38,12 +42,38 @@ class RegistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myDb = UserDatabase.getInstance(requireContext())
+        ngecekResult()
+
 
         binding.btnDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_registFragment_to_loginFragment)
         }
+        signUpListner()
+    }
 
+    private fun ngecekResult() {
+        authViewModel.resultRegister.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it != 0.toLong()) {
+                    Toast.makeText(requireContext(), "Registration success", Toast.LENGTH_SHORT)
+                        .show()
+                    val bundle = Bundle().apply {
+                        putString(LoginFragment.USERNAME, binding.etUsername.text.toString())
+                    }
+                    findNavController().navigate(
+                        R.id.action_registFragment_to_loginFragment,
+                        bundle
+                    )
+                } else {
+                    Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+
+    }
+
+    private fun signUpListner(){
         binding.btnDaftar.setOnClickListener {
             // disini bawa data username untuk login
             if (binding.etPassword.text.toString() != binding.etConfirmPass.text.toString()) {
@@ -57,22 +87,26 @@ class RegistFragment : Fragment() {
                     binding.etEmail.text.toString(),
                     binding.etPassword.text.toString()
                 )
-                GlobalScope.async {
-                    val result = myDb?.userDao()?.addUser(objectUser)
-                    runBlocking(Dispatchers.Main) {
-                        if (result !=0.toLong()){
-                            Toast.makeText(requireContext(), "Registration success", Toast.LENGTH_SHORT).show()
-                            val bunlde = Bundle().apply {
-                                putString(LoginFragment.USERNAME, binding.etUsername.text.toString())
-                            }
-                            findNavController().navigate(R.id.action_registFragment_to_loginFragment,bunlde)
-                        }else{
-                            Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+                authViewModel.register(objectUser)
             }
         }
+    }
+//                GlobalScope.async {
+//                    val result = myDb?.userDao()?.addUser(objectUser)
+//                    runBlocking(Dispatchers.Main) {
+//                        if (result !=0.toLong()){
+//                            Toast.makeText(requireContext(), "Registration success", Toast.LENGTH_SHORT).show()
+//                            val bunlde = Bundle().apply {
+//                                putString(LoginFragment.USERNAME, binding.etUsername.text.toString())
+//                            }
+//                            findNavController().navigate(R.id.action_registFragment_to_loginFragment,bunlde)
+//                        }else{
+//                            Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
 //        val sharedPreferences : SharedPreferences =
 //            requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
@@ -121,7 +155,7 @@ class RegistFragment : Fragment() {
 //            }
 //        }
 
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()

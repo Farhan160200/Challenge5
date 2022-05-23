@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.farhanfarkaann.challenge5.databinding.ActivityRecyclerHorizontalPopularBinding
-import com.farhanfarkaann.challenge5.model_Popular.ResultPopular
+import com.farhanfarkaann.challenge5.data.api.model.model_Popular.ResultPopular
 
 class MoviesPopularAdapter(private val onClick2:(ResultPopular)->Unit) : ListAdapter<ResultPopular, MoviesPopularAdapter.ViewHolder2>(
     ResultComparator()

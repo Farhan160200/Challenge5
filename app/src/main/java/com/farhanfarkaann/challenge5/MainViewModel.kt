@@ -1,150 +1,131 @@
 package com.farhanfarkaann.challenge5
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.farhanfarkaann.challenge5.model_Popular.GetMoviesPopular
-import com.farhanfarkaann.challenge5.model_TopRated.GetAllMovies
-import com.farhanfarkaann.challenge5.model_UpComing.GetMoviesUpComing
-import com.farhanfarkaann.challenge5.model_detail.DetailMoviesResponse
-import com.farhanfarkaann.challenge5.service.ApiClient
-import retrofit2.Call
-import retrofit2.Callback
+import androidx.lifecycle.viewModelScope
+import com.farhanfarkaann.challenge5.data.Repository
+import com.farhanfarkaann.challenge5.data.api.Resource
+import com.farhanfarkaann.challenge5.data.api.model.model_Popular.GetMoviesPopular
+import com.farhanfarkaann.challenge5.data.api.model.model_TopRated.GetAllMovies
+import com.farhanfarkaann.challenge5.data.api.model.model_UpComing.GetMoviesUpComing
+import com.farhanfarkaann.challenge5.data.api.model.model_detail.DetailMoviesResponse
+
+
+import com.farhanfarkaann.challenge5.room.entity.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainViewModel(application : Application) : AndroidViewModel(application)  {
-    val error: MutableLiveData<String> = MutableLiveData()
-    val isLoadingDetail = MutableLiveData<Boolean>()
-    val errorDetail: MutableLiveData<String> = MutableLiveData()
+import javax.inject.Inject
+
+@HiltViewModel
+class MainViewModel @Inject
+constructor(private val repository: Repository) : ViewModel() {
+//    val error: MutableLiveData<String> = MutableLiveData()
+//    val isLoadingDetail = MutableLiveData<Boolean>()
+//    val errorDetail: MutableLiveData<String> = MutableLiveData()
+
+    private val _user: MutableLiveData<User> = MutableLiveData()
+    val user: LiveData<User> get() = _user
+
+
 
     val isLoading = MutableLiveData<Boolean>()
-    private val _dataMovieTopRated: MutableLiveData<GetAllMovies> by lazy {
-        MutableLiveData<GetAllMovies>().also {
-            getAllMoviesTopRated()
+    private val _dataMovieTopRated : MutableLiveData<Resource<Response<GetAllMovies>>> = MutableLiveData()
+    val dataMovieTopRated : LiveData<Resource<Response<GetAllMovies>>> get() = _dataMovieTopRated
+
+    private val _dataMoviePoPularrr :  MutableLiveData<Resource<Response<GetMoviesPopular>>> = MutableLiveData()
+    val dataMoviePopular : LiveData<Resource<Response<GetMoviesPopular>>> get() = _dataMoviePoPularrr
+
+
+    private val _dataMovieUpCominggg : MutableLiveData<Resource<Response<GetMoviesUpComing>>> = MutableLiveData()
+    val dataMovieUpComing  : LiveData<Resource<Response<GetMoviesUpComing>>> get() = _dataMovieUpCominggg
+
+
+    private val _detailMovie : MutableLiveData<Resource<Response<DetailMoviesResponse>>> = MutableLiveData()
+            val detailMovie : LiveData<Resource<Response<DetailMoviesResponse>>> get() = _detailMovie
+
+//    val detailMovie: LiveData<Resource<Response<DetailMoviesResponse>>> = _detailMovie
+//    val dataMovies: LiveData<Resource<Response<GetAllMovies>>> = _dataMovieTopRated
+//    val dataMoviesPopular: LiveData<Resource<Response<GetMoviesPopular>>> = _dataMoviePoPular
+//    val dataMoviesUpcoming: LiveData<Resource<Response<GetMoviesUpComing>>> = _dataMovieUpComing
+
+
+     fun getMoviesUpcoming(apiKey : String) {
+        viewModelScope.launch {
+            _dataMovieUpCominggg.postValue(Resource.loading())
+            try {
+                _dataMovieUpCominggg.postValue(Resource.success(repository.getMoviesUpComing(apiKey)))
+            } catch (exception: Exception) {
+                _dataMovieUpCominggg.postValue(
+                    Resource.error(
+                        exception.localizedMessage ?: "Error occured"))
+            }
         }
     }
-    private val _dataMoviePoPular : MutableLiveData<GetMoviesPopular> by lazy {
-        MutableLiveData<GetMoviesPopular>().also {
-            getAllMoviesPopular()
+
+
+    fun getMoviesPopular(apiKey : String) {
+        viewModelScope.launch {
+            _dataMoviePoPularrr.postValue(Resource.loading())
+            try {
+                _dataMoviePoPularrr.postValue(Resource.success(repository.getMoviesPopular(apiKey)))
+            } catch (exception: Exception) {
+                _dataMoviePoPularrr.postValue(
+                    Resource.error(
+                        exception.localizedMessage ?: "Error occured"
+                    )
+                )
+            }
         }
     }
-    private val _dataMovieUpComing : MutableLiveData<GetMoviesUpComing> by lazy {
-        MutableLiveData<GetMoviesUpComing>().also {
-            getAllMoviesUpcoming()
+
+
+    fun getMoviesTopRated(apiKey : String) {
+        viewModelScope.launch {
+            _dataMovieTopRated.postValue(Resource.loading())
+            try {
+                _dataMovieTopRated.postValue(Resource.success(repository.getMoviesTopRated(apiKey)))
+            } catch (exception: Exception) {
+                _dataMovieTopRated.postValue(
+                    Resource.error(
+                        exception.localizedMessage ?: "Error occured"
+                    )
+                )
+            }
         }
     }
 
-
-    private val _detailMovie: MutableLiveData<DetailMoviesResponse> = MutableLiveData()
-    val detailMovie: LiveData<DetailMoviesResponse> = _detailMovie
-    val dataMovies : LiveData<GetAllMovies> = _dataMovieTopRated
-    val dataMoviesPopular : LiveData<GetMoviesPopular> = _dataMoviePoPular
-    val dataMoviesUpcoming : LiveData<GetMoviesUpComing> = _dataMovieUpComing
-
-
-
-    private fun getAllMoviesUpcoming() {
-        isLoading.postValue(true )
-        ApiClient.getInstance(getApplication()).getMoviesUpComing().enqueue(object : Callback<GetMoviesUpComing>{
-            override fun onResponse(
-                call: Call<GetMoviesUpComing>,
-                response: Response<GetMoviesUpComing>
-            ) {
-                isLoading.postValue(false )
-                val body = response.body()
-
-                if (response.code()==200)   {
-                    _dataMovieUpComing.postValue(body)
-                } else {
-                    error.postValue("Error")
-                }
-
+    fun getDetailMovies(id: Int, apiKey: String) {
+        viewModelScope.launch {
+            _detailMovie.postValue(Resource.loading())
+            try {
+                _detailMovie.postValue(Resource.success(repository.getDetailMovies(id, apiKey)))
+            } catch (exception: Exception) {
+                _detailMovie.postValue(
+                    Resource.error(
+                        exception.localizedMessage ?: "Error occured"
+                    )
+                )
             }
-
-            override fun onFailure(call: Call<GetMoviesUpComing>, t: Throwable) {
-                isLoading.postValue(false)
-            }
-
-        })
-
-    }
-
-
-
-
-
-    private fun getAllMoviesPopular() {
-        isLoading.postValue(true )
-        ApiClient.getInstance(getApplication()).getMoviesPopular().enqueue(object : Callback<GetMoviesPopular>{
-            override fun onResponse(
-                call: Call<GetMoviesPopular>,
-                response: Response<GetMoviesPopular>
-            ) {
-                isLoading.postValue(false )
-                val body = response.body()
-                if (response.code()==200)   {
-                    _dataMoviePoPular.postValue(body)
-                } else {
-                    error.postValue("Error")
-                }
-            }
-
-            override fun onFailure(call: Call<GetMoviesPopular>, t: Throwable) {
-                isLoading.postValue(false)
-            }
-
-
-        })
-    }
-
-
-
-    fun getAllMoviesTopRated(){
-        isLoading.postValue(true )
-        ApiClient.getInstance(getApplication()).getAllMovies().enqueue(object : Callback<GetAllMovies>{
-            override fun onResponse(
-                call: Call<GetAllMovies>,
-                response: Response<GetAllMovies>
-            ) {
-                isLoading.postValue(false )
-                val body = response.body()
-                if (response.code()==200)   {
-                    _dataMovieTopRated.postValue(body)
-                }else{
-                    error.postValue("Error")
-                }
-            }
-
-            override fun onFailure(call: Call<GetAllMovies>, t: Throwable) {
-               isLoading.postValue(false)
-            }
-
         }
-        )
+    }
+    fun getDataUser() {
+        viewModelScope.launch {
+            repository.getUserPref().collect {
+                _user.value = it
+            }
+        }
     }
 
-    fun getDetailMovies(id: Int){
-        isLoadingDetail.postValue(true)
-        ApiClient.getInstance(getApplication()).getDetailMovie(id).enqueue(object : Callback<DetailMoviesResponse> {
-            override fun onResponse(call: Call<DetailMoviesResponse>, response: Response<DetailMoviesResponse>) {
-                isLoading.postValue(false)
-                if (response.code() == 200){
-                    _detailMovie.postValue(response.body())
-                }else{
-                    errorDetail.postValue("Error")
-                }
-            }
-
-            override fun onFailure(call: Call<DetailMoviesResponse>, t: Throwable) {
-                isLoadingDetail.postValue(false)
-            }
-        })
+    fun deleteUserPref() {
+        viewModelScope.launch {
+            repository.deletePref()
+        }
     }
-
-
-
 }
 
 

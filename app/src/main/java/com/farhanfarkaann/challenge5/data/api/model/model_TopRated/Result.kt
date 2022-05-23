@@ -1,9 +1,9 @@
-package com.farhanfarkaann.challenge5.model_UpComing
+package com.farhanfarkaann.challenge5.data.api.model.model_TopRated
 
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultUpComing(
+data class Result(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")
