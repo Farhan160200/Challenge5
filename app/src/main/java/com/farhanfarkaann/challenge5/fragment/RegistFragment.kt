@@ -25,9 +25,7 @@ class RegistFragment : Fragment() {
     private var _binding: FragmentRegistBinding ? = null
     private val binding get() = _binding!!
     private val authViewModel : AuthViewModel by viewModels()
-    companion object{
-        const val   CONFPASSWORD = "CONFPASSWORD"
-    }
+
 
 
     override fun onCreateView(
@@ -91,70 +89,6 @@ class RegistFragment : Fragment() {
             }
         }
     }
-//                GlobalScope.async {
-//                    val result = myDb?.userDao()?.addUser(objectUser)
-//                    runBlocking(Dispatchers.Main) {
-//                        if (result !=0.toLong()){
-//                            Toast.makeText(requireContext(), "Registration success", Toast.LENGTH_SHORT).show()
-//                            val bunlde = Bundle().apply {
-//                                putString(LoginFragment.USERNAME, binding.etUsername.text.toString())
-//                            }
-//                            findNavController().navigate(R.id.action_registFragment_to_loginFragment,bunlde)
-//                        }else{
-//                            Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-//        val sharedPreferences : SharedPreferences =
-//            requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-
-//        binding.btnDaftar.setOnClickListener {
-//            GlobalScope.async {
-//                val username: String = binding.etUsername.text.toString()
-//                val emailIsi: String = binding.etEmail.text.toString()
-//                val password: String = binding.etPassword.text.toString()
-//                val confPassword: String = binding.etConfirmPass.text.toString()
-//                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-//
-//                runBlocking(Dispatchers.Main) {
-//                    when {
-//                        username.isEmpty() -> {
-//                            binding.tfUsername.error =
-//                                getString(com.google.android.material.R.string.error_icon_content_description)
-//                        }
-//                        emailIsi.isEmpty() -> {
-//                            binding.tfEmail.error = "Tidak Boleh Kosong!"
-//                        }
-//                        password.isEmpty() -> {
-//                            binding.tfPassword.error = "Tidak Bolek Kosong!"
-//                        }
-//                        confPassword.isEmpty() -> {
-//                            binding.tfConfirmPass.error = " Tidak Boleh Kosong!"
-//                        }
-//                        password != confPassword -> {
-//                            Toast.makeText(context, "Password Tidak Sama ", Toast.LENGTH_SHORT)
-//                                .show()
-//                        }
-//                        else -> {
-//                            editor.putString("USERNAME", username)
-//                            editor.putString("EMAILIS", emailIsi)
-//                            editor.putString("PASSWORD", password)
-//                            editor.putString(CONFPASSWORD, confPassword)
-//                            editor.apply()
-//                            Toast.makeText(context, "Data Saved", Toast.LENGTH_SHORT).show()
-//
-//
-//                            findNavController().navigate(R.id.action_registFragment_to_loginFragment)
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
 
 
     override fun onDestroy() {

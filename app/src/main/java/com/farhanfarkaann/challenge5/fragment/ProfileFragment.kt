@@ -38,38 +38,11 @@ import java.io.File
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
-    lateinit var dataStoreSetting: DataStoreSetting
     lateinit var prefFile: SharedPreferences
-
     private val args: ProfileFragmentArgs by navArgs()
     private val updateViewModel: UpdateViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
 
-//    lateinit var homeViewModel: HomeViewModel
-
-    private lateinit var userManager: UserManager
-
-    ///////////////////////////////////////////
-
-//    private val cameraResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == Activity.RESULT_OK) {
-//                val bitmap = result.data?.extras?.get("data") as Bitmap
-//                val uri = StorageUtils.savePhotoToExternalStorage(
-//                    contentResolver = null,
-//                    UUID.randomUUID().toString(),
-//                    bitmap
-//                )
-//                uri?.let {
-//                    loadImage(it)
-//                }
-//            }
-//        }
-//
-//    private fun loadImage(uri: Uri) {
-//        binding.ivLogo.setImageURI(uri)
-//    }
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -91,18 +64,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-    private val galleryResult =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-            prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-            val uri = result.toString()
-            val myEdit: SharedPreferences.Editor = prefFile.edit()
-            myEdit.putString("PHOTO", uri)
-            myEdit.commit()
-            loadImage(result)
-        }
 
-
-    ///////////////////////////////////
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -115,16 +77,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         updateViewModel.getDataUser()
         mainViewModel.getDataUser()
-        dataStoreSetting = DataStoreSetting(requireContext().dataStore)
         prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         setClickListeners()
-        logoutLogin()
 
-        userManager = UserManager(requireContext())
         val photo = prefFile.getString("PHOTO", "")
         binding.ivLogo.setImageURI(photo!!.toUri())
 
-//        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         updateViewModel.user.observe(viewLifecycleOwner) {
             binding.etNewUsername.setText(it.username)
             binding.etNewEmail.setText(it.email)
@@ -135,23 +93,28 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logout() {
+
+
         binding.btnBackHome.setOnClickListener {
-            val dialogKonfirmasi = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            dialogKonfirmasi.apply {
-                setTitle("Logout")
-                setMessage("Apakah anda yakin ingin log out?")
-                setNegativeButton("Batal") { dialog, which ->
-                    dialog.dismiss()
-                }
-                setPositiveButton("Ya") { dialog, which ->
-                    dialog.dismiss()
-                    mainViewModel.deleteUserPref()
+
+        AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
+
+            mainViewModel.deleteUserPref()
                     mainViewModel.user.observe(viewLifecycleOwner) {
                             findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
                     }
-                }
+
+            Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()
+        }
+            .setNegativeButton(
+                "Tidak"
+            ) { p0, p1 ->
+                p0.dismiss()
+
             }
-            dialogKonfirmasi.show()
+            .setMessage("Apakah Anda Yakin ingin Logout").setTitle("Konfirmasi Logout")
+            .create().show()
+
         }
     }
 
@@ -172,33 +135,6 @@ class ProfileFragment : Fragment() {
 
 
 
-//        prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-//        val username = prefFile.getString("USERNAME", "")
-//        val email = prefFile.getString("EMAILIS","")
-//        val password = prefFile.getString("PASSWORD","")
-//        val photo = prefFile.getString("PHOTO","")
-//
-//        binding.ivLogo.isVisible
-//
-//        binding.etNewUsername.setText(username.toString())
-//        binding.etNewEmail.setText(email.toString())
-//        binding.etNewPassword.setText(password.toString())
-//        binding.ivLogo.setImageURI(photo!!.toUri())
-//        binding.btnUpdateProfile.setOnClickListener{
-//
-//            val username : String = binding.etNewUsername.text.toString()
-//            val emailIsi : String = binding.etNewEmail.text.toString()
-//            val password : String  = binding.etNewPassword.text.toString()
-//            val myEdit: SharedPreferences.Editor = prefFile.edit()
-//            myEdit.putString("USERNAME",username)
-//            myEdit.putString("NEWEMAIL",emailIsi)
-//            myEdit.putString("PASSWORD",password)
-//            myEdit.commit()
-//            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
-//            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-//
-//        }
-
 private fun observeUpdate() {
     updateViewModel.resultUpdate.observe(viewLifecycleOwner) {
         if (it != null) {
@@ -212,38 +148,8 @@ private fun observeUpdate() {
                     .show()
             }
         }
-
-    }
-
-    }
-private fun logoutLogin() {
-    binding.btnBackHome.setOnClickListener {
-        check()
-        AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
-            findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
-
-            val myEdit: SharedPreferences.Editor = prefFile.edit()
-            myEdit.putBoolean("CHECKBOX", false)
-            myEdit.apply()
-
-
-            Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()
-        }
-            .setNegativeButton(
-                "Tidak"
-            ) { p0, p1 ->
-                p0.dismiss()
-
-            }
-            .setMessage("Apakah Anda Yakin ingin Logout").setTitle("Konfirmasi Logout")
-            .create().show()
-
-
     }
 }
-
-
-
 
 
     private fun setClickListeners() {
@@ -253,17 +159,7 @@ private fun logoutLogin() {
         }
     }
 
-    private fun openGallery() {
-        galleryResult.launch("image/*")
-    }
 
-    private fun check() {
-
-        //Stores the values
-        GlobalScope.launch {
-            dataStoreSetting.clearSession()
-        }
-    }
 
 
 

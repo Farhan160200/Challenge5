@@ -29,10 +29,7 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by viewModels()
-    lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var pref: UserManager
-    private lateinit var userManager: UserManager
 
     companion object {
         const val ID = "ID"
@@ -54,8 +51,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pref = UserManager(requireActivity())
-        userManager = UserManager(requireActivity())
         mainViewModel.getDataUser()
         getUser()
         mainViewModel.user.observe(viewLifecycleOwner){
@@ -82,26 +77,9 @@ class HomeFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
             }
         }
-//        mainViewModel.dataMovieTopRated.observe(viewLifecycleOwner) {
-//            fetchMovie(it.data?.body()?.results)
-//        }
-//        mainViewModel.dataMoviePopular.observe(viewLifecycleOwner) {
-//            showListDetailPopular(it.data?.body()?.results)
-//        }
-//        mainViewModel.dataMovieUpComing.observe(viewLifecycleOwner) {
-//            showListDetailUpComing(it.data?.body()?.results)
-//        }
-//        mainViewModel.apply {
-//            getAllMoviesTopRated()
-//            getDataUser()
-//            getDetailMovies(id)
-//            getUser()
-//        }
         getMoviesTopRated()
         getMoviesPopular()
         getMoviesUpComing()
-
-
 
     }
 
@@ -260,15 +238,3 @@ class HomeFragment : Fragment() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-//}

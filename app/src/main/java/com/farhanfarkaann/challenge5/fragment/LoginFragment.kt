@@ -31,7 +31,6 @@ class LoginFragment : Fragment() {
 
     private var myDb: UserDatabase? = null
      lateinit var binding: FragmentLoginBinding
-     lateinit var dataStoreSetting: DataStoreSetting
     private val authViewModel : AuthViewModel by viewModels()
 
     lateinit var prefFile : SharedPreferences
@@ -61,17 +60,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataStoreSetting = DataStoreSetting(requireContext().dataStore)
 
-//        buttonSave()
-//        observeData()
+
         userLogin()
         setUsername()
-//        userManager = UserManager(requireContext())
-//        viewModel =
-//            ViewModelProvider(requireActivity(), ViewModelFactory(userManager))[HomeViewModel::class.java]
-////        userLogin()
-//        userManager = UserManager(requireContext())
         myDb = UserDatabase.getInstance(requireContext())
         binding.tvRegisterSwitch.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registFragment)
@@ -86,48 +78,6 @@ class LoginFragment : Fragment() {
             loginCheck()
         }
 
-
-
-
-//        binding.btnLogin.setOnClickListener {
-//            GlobalScope.async {
-//                val result = myDb?.userDao()?.getUser(
-//                    binding.etUsername.text.toString(),
-//                    binding.etPassword.text.toString()
-//                )
-//                runBlocking(Dispatchers.Main) {
-//                    if (result == null) {
-//                        val snackbar = Snackbar.make(
-//                            it, "Gagal masuk mungkin anda salah memasukan email atau password",
-//                            Snackbar.LENGTH_INDEFINITE
-//                        )
-//                        snackbar.setAction("Oke") {
-//                            snackbar.dismiss()
-//                            binding.etUsername.requestFocus()
-//                            binding.etUsername.text!!.clear()
-//                            binding.etPassword.text!!.clear()
-//                        }
-//
-//                        snackbar.show()
-//                    }else {
-//                        Toast.makeText(
-//                            requireContext(),
-//                            "Selamat datang ${binding.etUsername.text.toString()}",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                        val navigateHome =
-//                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(
-//                                binding.etUsername.text.toString(),
-//                                binding.etPassword.text.toString()
-//                            )
-//                        findNavController().navigate(navigateHome)
-//                    }
-//                }
-//                if (result != null){
-//                    viewModel.setDataUser(result)
-//                }
-//            }
-//        }
 
     }
 
@@ -166,15 +116,6 @@ class LoginFragment : Fragment() {
 
     }
 
-    //    private fun userLogin() {
-//        viewModel.apply {
-//            getDataUser().observe(viewLifecycleOwner){
-//                if (it.id != UserManager.DEFAULT_ID){
-//                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-//                }
-//            }
-//        }
-//    }
 
     private fun userLogin() {
         authViewModel.getDataUser()
@@ -193,96 +134,4 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-
-//        prefFile =  requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-////        isRemembered = prefFile.getBoolean("CHECKBOX",false)
-//
-//
-//
-//        val email2 = prefFile.getString("EMAILIS","")
-//        val username = prefFile.getString("USERNAME","")
-//        val pass2 = prefFile.getString("PASSWORD","")
-//
-////        if (isRemembered){
-////            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-////        }
-//
-//
-//
-//        binding.btnLogin.setOnClickListener {
-//            GlobalScope.async {
-//                val email: String = binding.etEmail.text.toString()
-//                val password: String = binding.etPassword.text.toString()
-////                val checked: Boolean = binding.checkbox.isChecked
-//                val editor: SharedPreferences.Editor = prefFile.edit()
-////                editor.putBoolean("CHECKBOX", checked)
-//                editor.apply()
-//                runBlocking(Dispatchers.Main) {
-//                    if (email.isEmpty() && password.isEmpty()) {
-//                        Toast.makeText(context, "Tidak Boleh Kosong", Toast.LENGTH_SHORT).show()
-//
-//                    } else {
-//                        when {
-//                            email2 != email -> {
-//                                binding.tfEmail.error = "Email tidak Terdaftar."
-//                            }
-//                            pass2 != password -> {
-//                                binding.tfPassword.error = "Password  yang anda masukan salah."
-//                            }
-//
-//                            else -> {
-//                                Toast.makeText(
-//                                    context,
-//                                    "Selamat Datang $username",
-//                                    Toast.LENGTH_SHORT
-//                                )
-//                                    .show()
-//                                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                binding.tvRegisterSwitch.setOnClickListener {
-//                    findNavController().navigate(R.id.action_loginFragment_to_registFragment)
-//                }
-//            }
-//        }
-
-
-//    private fun observeData() {
-//            dataStoreSetting.userRememberedMe.asLiveData().observe(viewLifecycleOwner) {
-//
-//                if (it == true && binding.etPassword.text!!.isNotEmpty()) {
-//                    binding.btnLogin.setOnClickListener {
-//                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-//                    }
-//            }
-//        }
-////        authViewModel.getDataUser()
-////        authViewModel.user.observe(viewLifecycleOwner) {
-////            if (it.remember != UserManager.DEFAULT_REMEMBER && findNavController().currentDestination?.id == R.id.loginFragment) {
-////                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-////            }
-////        }
-//    }
-
-
-
-//    private fun buttonSave() {
-//
-//        //Gets the user input and saves it
-//        binding.checkbox.setOnClickListener {
-//
-//            val checked: Boolean = binding.checkbox.isChecked
-//
-//            //Stores the values
-//            GlobalScope.launch {
-//                dataStoreSetting.storeUser(checked)
-//
-//
-//            }
-//        }
-//    }
 }

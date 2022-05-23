@@ -24,9 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject
 constructor(private val repository: Repository) : ViewModel() {
-//    val error: MutableLiveData<String> = MutableLiveData()
-//    val isLoadingDetail = MutableLiveData<Boolean>()
-//    val errorDetail: MutableLiveData<String> = MutableLiveData()
 
     private val _user: MutableLiveData<User> = MutableLiveData()
     val user: LiveData<User> get() = _user
@@ -47,11 +44,6 @@ constructor(private val repository: Repository) : ViewModel() {
 
     private val _detailMovie : MutableLiveData<Resource<Response<DetailMoviesResponse>>> = MutableLiveData()
             val detailMovie : LiveData<Resource<Response<DetailMoviesResponse>>> get() = _detailMovie
-
-//    val detailMovie: LiveData<Resource<Response<DetailMoviesResponse>>> = _detailMovie
-//    val dataMovies: LiveData<Resource<Response<GetAllMovies>>> = _dataMovieTopRated
-//    val dataMoviesPopular: LiveData<Resource<Response<GetMoviesPopular>>> = _dataMoviePoPular
-//    val dataMoviesUpcoming: LiveData<Resource<Response<GetMoviesUpComing>>> = _dataMovieUpComing
 
 
      fun getMoviesUpcoming(apiKey : String) {
