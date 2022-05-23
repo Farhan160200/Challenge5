@@ -8,23 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentLoginBinding
-import com.farhanfarkaann.challenge5.data.datastore.DataStoreSetting
-import com.farhanfarkaann.challenge5.data.datastore.dataStore
 import com.farhanfarkaann.challenge5.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
-import com.farhanfarkaann.challenge5.viewmodeluser.HomeViewModel
 import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
-import com.farhanfarkaann.challenge5.viewmodeluser.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
-
-import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {

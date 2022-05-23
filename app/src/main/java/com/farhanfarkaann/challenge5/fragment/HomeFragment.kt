@@ -1,6 +1,5 @@
 package com.farhanfarkaann.challenge5.fragment
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,12 +14,8 @@ import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.adapter.MoviesPopularAdapter
 import com.farhanfarkaann.challenge5.adapter.MoviesTopRatedAdapter
 import com.farhanfarkaann.challenge5.adapter.MoviesUpComingAdapter
-
 import com.farhanfarkaann.challenge5.data.api.Status
 import com.farhanfarkaann.challenge5.databinding.FragmentHomeBinding
-import com.farhanfarkaann.challenge5.viewmodeluser.HomeViewModel
-
-import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 

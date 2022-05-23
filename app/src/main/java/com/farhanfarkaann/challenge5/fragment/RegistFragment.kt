@@ -1,7 +1,5 @@
 package com.farhanfarkaann.challenge5.fragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,13 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
-import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
 import com.farhanfarkaann.challenge5.databinding.FragmentRegistBinding
-import com.farhanfarkaann.challenge5.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.room.entity.User
 import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class RegistFragment : Fragment() {
