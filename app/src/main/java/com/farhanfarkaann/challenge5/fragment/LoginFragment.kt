@@ -22,7 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var myDb: UserDatabase? = null
-     lateinit var binding: FragmentLoginBinding
+     private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
     private val authViewModel : AuthViewModel by viewModels()
 
     lateinit var prefFile : SharedPreferences
@@ -41,7 +42,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(layoutInflater)
+        _binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
 
 
@@ -124,6 +125,11 @@ class LoginFragment : Fragment() {
         } else {
             binding.etUsername.setText(username)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

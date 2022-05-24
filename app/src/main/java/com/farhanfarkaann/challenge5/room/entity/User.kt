@@ -11,8 +11,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class User(
     @PrimaryKey(autoGenerate = true) var id:Int?,
-    @ColumnInfo(name = "username") var username : String,
-    @ColumnInfo(name = "email") var email : String,
-    @ColumnInfo(name = "password") var password : String,
+    @ColumnInfo(name = "username") var username: String,
+    @ColumnInfo(name = "email") var email: String,
+    @ColumnInfo(name = "password") var password: String,
+    @ColumnInfo(name = "avatar") var avatar: String
 
-): Parcelable
+    ): Parcelable

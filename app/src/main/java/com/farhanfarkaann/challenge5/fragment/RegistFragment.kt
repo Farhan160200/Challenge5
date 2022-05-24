@@ -78,8 +78,7 @@ class RegistFragment : Fragment() {
                     null,
                     binding.etUsername.text.toString(),
                     binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString()
-                )
+                    binding.etPassword.text.toString(),"")
                 authViewModel.register(objectUser)
             }
         }

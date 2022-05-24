@@ -1,7 +1,6 @@
 package com.farhanfarkaann.challenge5.viewmodeluser
 
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -17,11 +16,13 @@ class UserManager(private val context: Context) {
         val USERNAME_KEY = stringPreferencesKey("USERNAME_KEY")
         private val EMAIL_KEY = stringPreferencesKey("EMAIL_KEY")
         val PASSWORD_KEY = stringPreferencesKey("PASSWORD_KEY")
+        val AVATAR_KEY = stringPreferencesKey("AVATAR_KEY")
 
         const val DEFAULT_ID = -1
         const val DEFAULT_USERNAME = "DEF_USERNAME"
         const val DEFAULT_EMAIL = "DEF_EMAIL"
         const val DEFAULT_PASSWORD = "DEF_PASSWORD"
+        const val DEFAULT_AVATAR = ""
         val Context.dataStore by preferencesDataStore(USERPREF)
     }
 
@@ -31,6 +32,8 @@ class UserManager(private val context: Context) {
             preferences[USERNAME_KEY] = user.username
             preferences[EMAIL_KEY] = user.email
             preferences[PASSWORD_KEY] = user.password
+            preferences[AVATAR_KEY] = user.avatar
+
         }
     }
 
@@ -41,6 +44,7 @@ class UserManager(private val context: Context) {
                 preferences[USERNAME_KEY] ?: DEFAULT_USERNAME,
                 preferences[EMAIL_KEY] ?: DEFAULT_EMAIL,
                 preferences[PASSWORD_KEY] ?: DEFAULT_PASSWORD,
+                preferences[AVATAR_KEY] ?: DEFAULT_AVATAR
             )
         }
     }

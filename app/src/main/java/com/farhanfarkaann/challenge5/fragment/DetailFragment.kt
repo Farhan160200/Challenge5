@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
-    private lateinit var _binding: FragmentDetailBinding
+    private  var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by viewModels()
 
@@ -110,6 +110,11 @@ class DetailFragment : Fragment() {
 //        mainViewModel.getDetailMovies(idUpComing!!,apiKey)
 //        mainViewModel.getDetailMovies(idTopRated!!,apiKey)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

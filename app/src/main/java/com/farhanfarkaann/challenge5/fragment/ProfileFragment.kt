@@ -36,6 +36,8 @@ class ProfileFragment : Fragment() {
     private val updateViewModel: UpdateViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
 
+    private var imageUri: Uri? = null
+
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -45,6 +47,8 @@ class ProfileFragment : Fragment() {
                 Activity.RESULT_OK -> {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data
+                    imageUri =data?.data
+                    imageUri?.let { loadImage(it) }
                     loadImage(fileUri)
 
                 }
@@ -71,16 +75,31 @@ class ProfileFragment : Fragment() {
         updateViewModel.getDataUser()
         mainViewModel.getDataUser()
         prefFile = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        setClickListeners()
 
-        val photo = prefFile.getString("PHOTO", "")
-        binding.ivLogo.setImageURI(photo!!.toUri())
+
+
 
         updateViewModel.user.observe(viewLifecycleOwner) {
             binding.etNewUsername.setText(it.username)
             binding.etNewEmail.setText(it.email)
             binding.etNewPassword.setText(it.password)
+            val photo  = it.avatar
+//            val myEdit: SharedPreferences.Editor = prefFile.edit()
+//            myEdit.putString("PHOTO",photo)
+//            myEdit.apply()
+            val photo2 = prefFile.getString("PHOTO", photo)
+            binding.ivLogo.setImageURI(photo2?.toUri())
+//            binding.ivLogo.setImageURI(it.avatarPath?.toUri())
+//            if (it?.avatarPath!=""){
+//                if (imageUri!=null){
+//                    binding.ivLogo.setImageURI(imageUri)
+//                }else{
+//                    binding.ivLogo.setImageURI(it.avatarPath?.toUri())
+//                }
+
+//            }
         }
+        setClickListeners()
         updateUser()
         logout()
     }
@@ -94,6 +113,8 @@ class ProfileFragment : Fragment() {
 
             mainViewModel.deleteUserPref()
                     mainViewModel.user.observe(viewLifecycleOwner) {
+                        val myEdit: SharedPreferences.Editor = prefFile.edit()
+                        myEdit.remove("PHOTO").apply()
                             findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
                     }
 
@@ -112,18 +133,35 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUser() {
+
+
         binding.btnUpdateProfile.setOnClickListener {
-            val user = User(
-                args.user.id,
-                binding.etNewUsername.text.toString(),
-                binding.etNewEmail.text.toString(),
-                binding.etNewPassword.text.toString(),
-            )
-            updateViewModel.update(user)
-            updateViewModel.setDataUser(user)
-            updateViewModel.getDataUser()
-            observeUpdate()
-        }
+            val imageProfile = if (imageUri==null){
+                ""
+            }else{
+                imageUri.toString()
+            }
+
+//            val photo = prefFile.getString("PHOTO", "")
+
+                val user = User(
+                    args.user.id,
+                    binding.etNewUsername.text.toString(),
+                    binding.etNewEmail.text.toString(),
+                    binding.etNewPassword.text.toString(),
+                    imageProfile
+//                    photo
+                    )
+
+
+                updateViewModel.update(user)
+                updateViewModel.setDataUser(user)
+                updateViewModel.getDataUser()
+                observeUpdate()
+            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+            Toast.makeText(context, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
 
@@ -148,6 +186,7 @@ private fun observeUpdate() {
     private fun setClickListeners() {
 
         binding.ivLogo.setOnClickListener {
+
             openImagePicker()
         }
     }
@@ -175,16 +214,17 @@ private fun observeUpdate() {
             }
     }
     private fun loadImage(uri: Uri?) {
-        uri?.let {
-            val photo = it.toString()
-            val myEdit: SharedPreferences.Editor = prefFile.edit()
-            myEdit.putString("PHOTO",photo)
-            myEdit.apply()
-            Log.d("main", "saveToLocal: ${photo.toUri()}}")
+//        uri?.let {
+//            val photo = it.toString()
+//            val myEdit: SharedPreferences.Editor = prefFile.edit()
+//            myEdit.putString("PHOTO",photo)
+//            myEdit.apply()
+//            Log.d("main", "saveToLocal: ${photo.toUri()}}")
+//            binding.ivLogo.setImageURI(it)
+//        }
 
+            binding.ivLogo.setImageURI(uri)
 
-            binding.ivLogo.setImageURI(it)
-        }
     }
 
     override fun onDestroy() {
