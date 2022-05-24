@@ -61,9 +61,12 @@ class DetailFragment : Fragment() {
         val bundle = arguments
 
 
-        val id = bundle?.getInt(ID)
-        val z = bundle?.getInt(ID2)
+        val idTopRated = bundle?.getInt(ID)
+        val idPopular = bundle?.getInt(ID2)
         val idUpComing = bundle?.getInt(ID3)
+//        if ( idPopular.toString().isNotEmpty() &&  idTopRated. ){
+//
+//        }
         mainViewModel.detailMovie.observe(viewLifecycleOwner) {
 
             val genre = arrayListOf<String>()
@@ -94,9 +97,18 @@ class DetailFragment : Fragment() {
 
 
         }
-        mainViewModel.getDetailMovies(z!!,apiKey)
-        mainViewModel.getDetailMovies(idUpComing!!,apiKey)
-        mainViewModel.getDetailMovies(id!!,apiKey)
+       if ( idPopular.toString() !=  "0"){
+           mainViewModel.getDetailMovies(idPopular!!,apiKey)
+
+       } else if (idTopRated.toString() != "0") {
+           mainViewModel.getDetailMovies(idTopRated!!,apiKey)
+
+       } else if  (idUpComing.toString() != "0"){
+           mainViewModel.getDetailMovies(idUpComing!!,apiKey)
+       }
+//        mainViewModel.getDetailMovies(idPopular!!,apiKey)
+//        mainViewModel.getDetailMovies(idUpComing!!,apiKey)
+//        mainViewModel.getDetailMovies(idTopRated!!,apiKey)
 
     }
 
