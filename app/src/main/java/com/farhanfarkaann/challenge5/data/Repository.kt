@@ -39,4 +39,5 @@ class Repository(
     suspend fun getMoviesPopular(apiKey : String) = apiHelper.getAllMoviesPopular(apiKey)
     suspend fun getMoviesUpComing(apiKey: String ) = apiHelper.getAllMoviesUpComing(apiKey)
     suspend fun getDetailMovies(id: Int, apiKey: String) = apiHelper.getDetailMovies(id,apiKey)
+
 }
