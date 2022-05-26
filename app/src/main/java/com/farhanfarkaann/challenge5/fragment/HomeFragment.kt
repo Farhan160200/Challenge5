@@ -89,12 +89,12 @@ class HomeFragment : Fragment() {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesTopRatedAdapter {
+                            val adapter = MoviesTopRatedAdapter { idCarrier ->
                                 val mBundle = Bundle()
-                                mBundle.putInt(ID, it.id)
+                                mBundle.putInt(ID, idCarrier.id)
                                 findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
                             }
-                            adapter.submitList(it.data?.body()!!.results)
+                            adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewView.adapter = adapter
 
                         }
@@ -137,12 +137,12 @@ class HomeFragment : Fragment() {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesPopularAdapter {
+                            val adapter = MoviesPopularAdapter { idCarrier ->
                                 val mBundle = Bundle()
-                                mBundle.putInt(ID2, it.id)
+                                mBundle.putInt(ID2, idCarrier.id)
                                 findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
                             }
-                            adapter.submitList(it.data?.body()!!.results)
+                            adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewPopular.adapter = adapter
 
                         }
@@ -185,12 +185,12 @@ class HomeFragment : Fragment() {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesUpComingAdapter {
+                            val adapter = MoviesUpComingAdapter { idCarrier ->
                                 val mBundle = Bundle()
-                                mBundle.putInt(ID3, it.id)
+                                mBundle.putInt(ID3, idCarrier.id)
                                 findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
                             }
-                            adapter.submitList(it.data?.body()!!.results)
+                            adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewUpComing.adapter = adapter
 
                         }

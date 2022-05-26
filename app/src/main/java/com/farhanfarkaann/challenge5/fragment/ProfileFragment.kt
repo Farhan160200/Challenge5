@@ -114,7 +114,7 @@ class ProfileFragment : Fragment() {
 
         binding.btnBackHome.setOnClickListener {
 
-        AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { p0, p1 ->
+        AlertDialog.Builder(requireContext()).setPositiveButton("Ya") { _, _ ->
 
             mainViewModel.deleteUserPref()
                     mainViewModel.user.observe(viewLifecycleOwner) {
@@ -130,7 +130,7 @@ class ProfileFragment : Fragment() {
         }
             .setNegativeButton(
                 "Tidak"
-            ) { p0, p1 ->
+            ) { p0, _ ->
                 p0.dismiss()
 
             }

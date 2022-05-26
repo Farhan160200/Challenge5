@@ -12,9 +12,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if(BuildConfig.FLAVOR.equals("demo")) {
-            Toast.makeText(this, "ini adlaah demo", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "ini adalah demo", Toast.LENGTH_SHORT).show()
         }else if(BuildConfig.FLAVOR.equals("full")) {
-            Toast.makeText(this, "ini adlaah full", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "ini adalah full", Toast.LENGTH_SHORT).show()
 
 
         }

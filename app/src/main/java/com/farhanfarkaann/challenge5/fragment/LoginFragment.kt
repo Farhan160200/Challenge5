@@ -1,6 +1,5 @@
 package com.farhanfarkaann.challenge5.fragment
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,15 +25,8 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val authViewModel : AuthViewModel by viewModels()
 
-    lateinit var prefFile : SharedPreferences
-
-    var isRemembered = false
-    var check = false
     companion object{
-        const val EMAILISI  = "EMAIL"
-        const val PASSWORD = "PASSWORD"
         const val USERNAME = "username"
-        const val   CONFPASSWORD = "CONFPASSWORD"
     }
 
 
