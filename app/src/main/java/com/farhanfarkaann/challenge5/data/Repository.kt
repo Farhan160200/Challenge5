@@ -1,8 +1,8 @@
 package com.farhanfarkaann.challenge5.data
 
 import com.farhanfarkaann.challenge5.data.api.ApiHelper
-import com.farhanfarkaann.challenge5.room.dao.UserDao
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.dao.UserDao
+import com.farhanfarkaann.challenge5.data.room.entity.User
 import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import kotlinx.coroutines.flow.Flow
 

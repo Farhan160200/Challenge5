@@ -2,8 +2,8 @@ package com.farhanfarkaann.challenge5.di
 
 import android.content.Context
 import androidx.room.Room
-import com.farhanfarkaann.challenge5.room.dao.UserDao
-import com.farhanfarkaann.challenge5.room.database.UserDatabase
+import com.farhanfarkaann.challenge5.data.room.dao.UserDao
+import com.farhanfarkaann.challenge5.data.room.database.UserDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

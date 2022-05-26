@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +20,9 @@ import androidx.navigation.fragment.navArgs
 import com.farhanfarkaann.challenge5.MainViewModel
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentProfileBinding
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.entity.User
 import com.farhanfarkaann.challenge5.ui.UpdateViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -99,6 +99,11 @@ class ProfileFragment : Fragment() {
 
 //            }
         }
+//        mainViewModel.user.observe(viewLifecycleOwner) {
+//
+//        }
+
+
         setClickListeners()
         updateUser()
         logout()
@@ -113,9 +118,12 @@ class ProfileFragment : Fragment() {
 
             mainViewModel.deleteUserPref()
                     mainViewModel.user.observe(viewLifecycleOwner) {
-                        val myEdit: SharedPreferences.Editor = prefFile.edit()
-                        myEdit.remove("PHOTO").apply()
+//                        val myEdit: SharedPreferences.Editor = prefFile.edit()
+//                        myEdit.remove("PHOTO").apply()
+
+                        if (it.username == UserManager.DEFAULT_USERNAME) {
                             findNavController().navigate(R.id.action_profileFragment_to_loginFragment2)
+                        }
                     }
 
             Toast.makeText(context, "anda berhasil logout", Toast.LENGTH_SHORT).show()

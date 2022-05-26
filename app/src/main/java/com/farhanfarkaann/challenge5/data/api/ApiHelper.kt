@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiHelper(private val apiService: ApiService) {
+
     suspend fun getAllMovies(apiKey: String) = apiService.getAllMovies(apiKey)
     suspend fun getAllMoviesPopular(apiKey: String) = apiService.getAllMoviesPopular(apiKey)
     suspend fun getAllMoviesUpComing(apiKey: String) = apiService.getAllMoviesUpComing(apiKey)

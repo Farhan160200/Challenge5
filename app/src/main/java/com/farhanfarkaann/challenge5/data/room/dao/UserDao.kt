@@ -1,7 +1,7 @@
-package com.farhanfarkaann.challenge5.room.dao
+package com.farhanfarkaann.challenge5.data.room.dao
 
 import androidx.room.*
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.entity.User
 
 
 @Dao

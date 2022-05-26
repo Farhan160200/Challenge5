@@ -61,7 +61,7 @@
             app:destination="@id/loginFragment" />
         <argument
             android:name="user"
-            app:argType="com.farhanfarkaann.challenge5.room.entity.User" />
+            app:argType="com.farhanfarkaann.challenge5.data.room.entity.User" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

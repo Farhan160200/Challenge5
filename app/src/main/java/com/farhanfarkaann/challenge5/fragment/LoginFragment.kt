@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentLoginBinding
-import com.farhanfarkaann.challenge5.room.database.UserDatabase
+import com.farhanfarkaann.challenge5.data.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
 import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import com.google.android.material.snackbar.Snackbar
@@ -68,8 +68,9 @@ class LoginFragment : Fragment() {
                 binding.etPassword.text.toString(),
             )
 
-            loginCheck()
+
         }
+        loginCheck()
 
 
     }

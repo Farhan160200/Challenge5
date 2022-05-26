@@ -1,11 +1,11 @@
-package com.farhanfarkaann.challenge5.room.database
+package com.farhanfarkaann.challenge5.data.room.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.farhanfarkaann.challenge5.room.dao.UserDao
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.dao.UserDao
+import com.farhanfarkaann.challenge5.data.room.entity.User
 
 @Database(entities = [User::class], version = 1)
 abstract class UserDatabase: RoomDatabase(){

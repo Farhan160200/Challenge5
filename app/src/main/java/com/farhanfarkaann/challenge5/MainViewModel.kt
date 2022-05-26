@@ -14,7 +14,7 @@ import com.farhanfarkaann.challenge5.data.api.model.model_UpComing.GetMoviesUpCo
 import com.farhanfarkaann.challenge5.data.api.model.model_detail.DetailMoviesResponse
 
 
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.entity.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response

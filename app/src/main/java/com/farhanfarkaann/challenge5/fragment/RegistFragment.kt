@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentRegistBinding
-import com.farhanfarkaann.challenge5.room.entity.User
+import com.farhanfarkaann.challenge5.data.room.entity.User
 import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -2,8 +2,7 @@ package com.farhanfarkaann.challenge5.di
 
 import com.farhanfarkaann.challenge5.data.Repository
 import com.farhanfarkaann.challenge5.data.api.ApiHelper
-import com.farhanfarkaann.challenge5.data.datastore.DataStoreSetting
-import com.farhanfarkaann.challenge5.room.dao.UserDao
+import com.farhanfarkaann.challenge5.data.room.dao.UserDao
 import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
 import dagger.Module
 import dagger.Provides
