@@ -1,7 +1,7 @@
 package com.farhanfarkaann.challenge5.di
 
 import android.content.Context
-import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
+import com.farhanfarkaann.challenge5.data.datastore.UserManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

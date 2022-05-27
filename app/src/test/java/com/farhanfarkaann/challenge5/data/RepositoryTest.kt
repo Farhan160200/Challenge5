@@ -7,7 +7,7 @@ import com.farhanfarkaann.challenge5.data.api.model.model_TopRated.GetAllMovies
 import com.farhanfarkaann.challenge5.data.api.model.model_UpComing.GetMoviesUpComing
 import com.farhanfarkaann.challenge5.data.api.model.model_detail.DetailMoviesResponse
 import com.farhanfarkaann.challenge5.data.room.dao.UserDao
-import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
+import com.farhanfarkaann.challenge5.data.datastore.UserManager
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

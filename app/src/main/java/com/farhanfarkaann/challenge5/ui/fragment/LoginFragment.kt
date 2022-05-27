@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.fragment
+package com.farhanfarkaann.challenge5.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,7 @@ import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentLoginBinding
 import com.farhanfarkaann.challenge5.data.room.database.UserDatabase
 import com.farhanfarkaann.challenge5.viewmodeluser.AuthViewModel
-import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
+import com.farhanfarkaann.challenge5.data.datastore.UserManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

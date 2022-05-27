@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.fragment
+package com.farhanfarkaann.challenge5.ui.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -17,12 +17,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.farhanfarkaann.challenge5.MainViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.MainViewModel
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.databinding.FragmentProfileBinding
 import com.farhanfarkaann.challenge5.data.room.entity.User
-import com.farhanfarkaann.challenge5.ui.UpdateViewModel
-import com.farhanfarkaann.challenge5.viewmodeluser.UserManager
+import com.farhanfarkaann.challenge5.viewmodeluser.UpdateViewModel
+import com.farhanfarkaann.challenge5.data.datastore.UserManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File

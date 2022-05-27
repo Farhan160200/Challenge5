@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.fragment
+package com.farhanfarkaann.challenge5.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.farhanfarkaann.challenge5.MainViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.MainViewModel
 import com.farhanfarkaann.challenge5.databinding.FragmentDetailBinding
-import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID
-import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID2
-import com.farhanfarkaann.challenge5.fragment.HomeFragment.Companion.ID3
+import com.farhanfarkaann.challenge5.ui.fragment.HomeFragment.Companion.ID
+import com.farhanfarkaann.challenge5.ui.fragment.HomeFragment.Companion.ID2
+import com.farhanfarkaann.challenge5.ui.fragment.HomeFragment.Companion.ID3
 import dagger.hilt.android.AndroidEntryPoint
 
 

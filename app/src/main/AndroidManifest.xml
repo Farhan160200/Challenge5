@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
         <activity
-            android:name=".SplashScreen"
+            android:name=".ui.activity.SplashScreen"
             android:theme="@style/SplashScreen"
             android:exported="true">
         <intent-filter>

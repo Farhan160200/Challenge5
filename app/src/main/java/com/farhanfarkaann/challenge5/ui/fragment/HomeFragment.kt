@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.fragment
+package com.farhanfarkaann.challenge5.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.farhanfarkaann.challenge5.MainViewModel
+import com.farhanfarkaann.challenge5.viewmodeluser.MainViewModel
 import com.farhanfarkaann.challenge5.R
 import com.farhanfarkaann.challenge5.adapter.MoviesPopularAdapter
 import com.farhanfarkaann.challenge5.adapter.MoviesTopRatedAdapter

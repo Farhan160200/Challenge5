@@ -1,9 +1,11 @@
-package com.farhanfarkaann.challenge5
+package com.farhanfarkaann.challenge5.ui.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.farhanfarkaann.challenge5.MainActivity
+import com.farhanfarkaann.challenge5.R
 
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

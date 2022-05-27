@@ -1,4 +1,4 @@
-package com.farhanfarkaann.challenge5.ui
+package com.farhanfarkaann.challenge5.viewmodeluser
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
