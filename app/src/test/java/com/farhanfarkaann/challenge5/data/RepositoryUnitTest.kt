@@ -17,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 
-class RepositoryTest {
+class RepositoryUnitTest {
     //Collaborator
     private lateinit var apiService: ApiService
     private lateinit var apiHelper: ApiHelper

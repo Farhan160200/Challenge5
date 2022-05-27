@@ -20,13 +20,13 @@ class UpdateViewModel @Inject constructor(private val repository: Repository): V
 
     fun setDataUser(user: User) {
         viewModelScope.launch {
-            repository.saveToPref(user)
+            repository.saveToPrefDataStore(user)
         }
     }
 
     fun getDataUser(){
         viewModelScope.launch {
-            repository.getUserPref().collect {
+            repository.getUserPrefDataStore().collect {
                 _user.value = it
             }
         }

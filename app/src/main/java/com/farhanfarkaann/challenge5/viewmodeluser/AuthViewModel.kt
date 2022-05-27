@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: Repository): ViewModel() {
-    private val  _resultRegister : MutableLiveData<Long> = MutableLiveData()
-    val resultRegister : LiveData<Long> get() = _resultRegister
+    private val  _dataUserRegist : MutableLiveData<Long> = MutableLiveData()
+    val resultRegister : LiveData<Long> get() = _dataUserRegist
 
-    private val  _resultLogin : MutableLiveData<User> = MutableLiveData()
-    val resultLogin : LiveData<User> get() = _resultLogin
+    private val  _dataUserLogin : MutableLiveData<User> = MutableLiveData()
+    val resultLogin : LiveData<User> get() = _dataUserLogin
 
     private val _user : MutableLiveData<User> = MutableLiveData()
     val user : LiveData<User> get() = _user
@@ -24,25 +24,25 @@ class AuthViewModel @Inject constructor(private val repository: Repository): Vie
 
     fun login(username:String, password:String){
         viewModelScope.launch {
-            _resultLogin.value = repository.login(username, password)
+            _dataUserLogin.value = repository.login(username, password)
         }
     }
 
     fun register(user: User){
         viewModelScope.launch {
-            _resultRegister.value = repository.register(user)
+            _dataUserRegist.value = repository.register(user)
         }
     }
     fun getDataUser(){
         viewModelScope.launch {
-            repository.getUserPref().collect {
+            repository.getUserPrefDataStore().collect {
                 _user.value = it
             }
         }
     }
     fun setDataUser(user: User) {
         viewModelScope.launch {
-            repository.saveToPref(user)
+            repository.saveToPrefDataStore(user)
         }
     }
 }

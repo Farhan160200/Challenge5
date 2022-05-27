@@ -35,16 +35,16 @@ class RegistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ngecekResult()
+        checkUserData()
 
 
         binding.btnDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_registFragment_to_loginFragment)
         }
-        signUpListner()
+        clickListenerSignUp()
     }
 
-    private fun ngecekResult() {
+    private fun checkUserData() {
         authViewModel.resultRegister.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it != 0.toLong()) {
@@ -66,7 +66,7 @@ class RegistFragment : Fragment() {
 
     }
 
-    private fun signUpListner(){
+    private fun clickListenerSignUp(){
         binding.btnDaftar.setOnClickListener {
             // disini bawa data username untuk login
             if (binding.etPassword.text.toString() != binding.etConfirmPass.text.toString()) {

@@ -26,7 +26,7 @@ class UserManager(private val context: Context) {
         val Context.dataStore by preferencesDataStore(USERPREF)
     }
 
-    suspend fun setUser(user: User) {
+    suspend fun setUserDataStore(user: User) {
         context.dataStore.edit { preferences ->
             preferences[ID_USER_KEY] = user.id!!.toInt()
             preferences[USERNAME_KEY] = user.username
@@ -37,7 +37,7 @@ class UserManager(private val context: Context) {
         }
     }
 
-    fun getUser(): Flow<User> {
+    fun getUserDataStore(): Flow<User> {
         return context.dataStore.data.map { preferences ->
             User(
                 preferences[ID_USER_KEY] ?: DEFAULT_ID,
@@ -49,7 +49,7 @@ class UserManager(private val context: Context) {
         }
     }
 
-    suspend fun deleteUserFromPref() {
+    suspend fun deleteUserFromPrefDataStore() {
         context.dataStore.edit {
             it.clear()
         }

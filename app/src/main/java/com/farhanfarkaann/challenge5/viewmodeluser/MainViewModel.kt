@@ -22,13 +22,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject
-constructor(private val repository: Repository) : ViewModel() {
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val _user: MutableLiveData<User> = MutableLiveData()
     val user: LiveData<User> get() = _user
-
-
 
     val isLoading = MutableLiveData<Boolean>()
     private val _dataMovieTopRated : MutableLiveData<Resource<Response<GetAllMovies>>> = MutableLiveData()
@@ -37,10 +34,8 @@ constructor(private val repository: Repository) : ViewModel() {
     private val _dataMoviePoPularrr :  MutableLiveData<Resource<Response<GetMoviesPopular>>> = MutableLiveData()
     val dataMoviePopular : LiveData<Resource<Response<GetMoviesPopular>>> get() = _dataMoviePoPularrr
 
-
     private val _dataMovieUpCominggg : MutableLiveData<Resource<Response<GetMoviesUpComing>>> = MutableLiveData()
     val dataMovieUpComing  : LiveData<Resource<Response<GetMoviesUpComing>>> get() = _dataMovieUpCominggg
-
 
     private val _detailMovie : MutableLiveData<Resource<Response<DetailMoviesResponse>>> = MutableLiveData()
             val detailMovie : LiveData<Resource<Response<DetailMoviesResponse>>> get() = _detailMovie
@@ -91,6 +86,7 @@ constructor(private val repository: Repository) : ViewModel() {
         }
     }
 
+
     fun getDetailMovies(id: Int, apiKey: String) {
         viewModelScope.launch {
             _detailMovie.postValue(Resource.loading())
@@ -105,17 +101,20 @@ constructor(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
+
     fun getDataUser() {
         viewModelScope.launch {
-            repository.getUserPref().collect {
+            repository.getUserPrefDataStore().collect {
                 _user.value = it
             }
         }
     }
 
+
     fun deleteUserPref() {
         viewModelScope.launch {
-            repository.deletePref()
+            repository.deletePrefDataStore()
         }
     }
 }
