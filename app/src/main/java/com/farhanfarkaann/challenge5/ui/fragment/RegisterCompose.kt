@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +21,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.DefaultAlpha
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
@@ -59,6 +64,17 @@ class RegisterCompose  : Fragment()  {
                                 modifier = Modifier.fillMaxSize(),
                                 color = MaterialTheme.colors.background
                             ) {
+
+
+                                ImageWithBackground(
+                                    painter = painterResource(id = R.drawable.wallpapers),
+                                    backgroundDrawableResId = R.drawable.wallpapers,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .height(2580.dp)
+                                        .width(2960.dp)
+                                        .padding(0.dp),
+                                )
                                 Column {
                                     HeaderLogin()
                                     ActionItem()
@@ -74,15 +90,50 @@ class RegisterCompose  : Fragment()  {
 /////////////////////////////////
 
     @Composable
+    fun ImageWithBackground(
+        painter: Painter,
+        @DrawableRes backgroundDrawableResId: Int,
+        contentDescription: String?,
+        modifier: Modifier = Modifier,
+        alignment: Alignment = Alignment.Center,
+        contentScale: ContentScale = ContentScale.FillBounds,
+        alpha: Float = DefaultAlpha,
+        colorFilter: ColorFilter? = null
+    ) {
+        Box(
+            modifier = modifier
+        ) {
+            Image(
+                painter = painterResource(backgroundDrawableResId),
+                contentDescription = null,
+                modifier = Modifier
+                    .matchParentSize()
+            )
+            Image(
+                painter = painter,
+                contentDescription = contentDescription,
+                alignment = alignment,
+                contentScale = contentScale,
+                alpha = alpha,
+                colorFilter = colorFilter,
+                modifier = Modifier
+                    .matchParentSize()
+            )
+        }
+    }
+
+    @Composable
     fun HeaderLogin() {
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Register", fontSize = 36.sp)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "IDLIK", fontSize = 50.sp,style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                color = Color.DarkGray)
+            Text(text = "Sign Up!", fontSize = 16.sp)
             Image(
                 painter = painterResource(id = R.drawable.ic_undraw_working_late_pukg),
                 contentDescription = "Image App",
-                modifier = Modifier.size(200.dp, 100.dp),
-                contentScale = ContentScale.Crop
+                modifier = Modifier.size(200.dp, 200.dp),
+                contentScale = ContentScale.Fit
             )
         }
     }
@@ -108,7 +159,6 @@ class RegisterCompose  : Fragment()  {
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(64.dp))
 
 
 
@@ -117,20 +167,23 @@ class RegisterCompose  : Fragment()  {
                 onValueChange = { username = it },
                 placeholder = { Text(text = "Username") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                modifier = Modifier.fillMaxWidth()
-            )
+                modifier = Modifier.fillMaxWidth().background(Color.White, RoundedCornerShape(22.dp)),
+                shape = RoundedCornerShape(22.dp)
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 placeholder = { Text(text = "Email") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().background(Color.White, RoundedCornerShape(22.dp)),
+                shape = RoundedCornerShape(22.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
 
             OutlinedTextField(
@@ -138,7 +191,8 @@ class RegisterCompose  : Fragment()  {
                 onValueChange = { password = it },
                 placeholder = { Text(text = "password") },
 //                visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().background(Color.White, RoundedCornerShape(22.dp)),
+                shape = RoundedCornerShape(22.dp),
                 visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = {
@@ -153,13 +207,14 @@ class RegisterCompose  : Fragment()  {
                     }
                 }
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = confPassword,
                 onValueChange = { confPassword = it },
                 placeholder = { Text(text = "Confirm Password") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().background(Color.White, RoundedCornerShape(22.dp)),
+                shape = RoundedCornerShape(22.dp),
                 visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = {
@@ -248,6 +303,16 @@ class RegisterCompose  : Fragment()  {
     fun DefaultPreview() {
 
         MyTheme {
+
+            ImageWithBackground(
+                painter = painterResource(id = R.drawable.wallpapers),
+                backgroundDrawableResId = R.drawable.wallpapers,
+                contentDescription = "",
+                modifier = Modifier
+                    .height(2580.dp)
+                    .width(2960.dp)
+                    .padding(0.dp),
+            )
             Column {
                 HeaderLogin()
                 ActionItem()

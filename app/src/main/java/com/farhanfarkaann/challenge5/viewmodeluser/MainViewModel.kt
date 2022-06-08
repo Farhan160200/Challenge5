@@ -16,6 +16,9 @@ import com.farhanfarkaann.challenge5.data.api.model.model_detail.DetailMoviesRes
 
 import com.farhanfarkaann.challenge5.data.room.entity.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -40,8 +43,13 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     private val _detailMovie : MutableLiveData<Resource<Response<DetailMoviesResponse>>> = MutableLiveData()
             val detailMovie : LiveData<Resource<Response<DetailMoviesResponse>>> get() = _detailMovie
 
+    private val _uiState: MutableStateFlow<DetailMovieUiState> =
+        MutableStateFlow(DetailMovieUiState())
+    val uiState: StateFlow<DetailMovieUiState> get() = _uiState.asStateFlow()
 
-     fun getMoviesUpcoming(apiKey : String) {
+
+
+    fun getMoviesUpcoming(apiKey : String) {
         viewModelScope.launch {
             _dataMovieUpCominggg.postValue(Resource.loading())
             try {
@@ -118,5 +126,12 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         }
     }
 }
+
+data class DetailMovieUiState(
+    val isLoading: Boolean = false,
+    val movie: DetailMoviesResponse? = null,
+    val isFavorite: Boolean = false,
+    val errorMessage: String? = null,
+)
 
 

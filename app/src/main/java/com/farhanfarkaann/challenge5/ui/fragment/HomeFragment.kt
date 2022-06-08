@@ -30,6 +30,10 @@ class HomeFragment : Fragment() {
         const val ID = "ID"
         const val ID3 = "ID2"
         const val ID2 = "ID2"
+        const val TITLE = "TITLE"
+        const val BACKDROP = "BACKDROP"
+        const val POPULARITY = "POPULARITY"
+        const val OVERVIEW = "OVERVIEW"
     }
 
 
@@ -88,11 +92,19 @@ class HomeFragment : Fragment() {
                 Status.SUCCESS -> {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
+                            val mBundle = Bundle()
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesTopRatedAdapter { idCarrier ->
-                                val mBundle = Bundle()
-                                mBundle.putInt(ID, idCarrier.id)
-                                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                            val adapter = MoviesTopRatedAdapter { detailCarrier ->
+
+
+                                mBundle.putString(BACKDROP, detailCarrier.posterPath)
+                                mBundle.putString(OVERVIEW, detailCarrier.overview)
+                                mBundle.putString(TITLE, detailCarrier.title)
+                                mBundle.putDouble(POPULARITY, detailCarrier.popularity)
+                                mBundle.putInt(ID, detailCarrier.id)
+                                if(detailCarrier.id > 0) {
+                                    findNavController().navigate(R.id.action_homeFragment_to_detailCompose, mBundle)
+                                }
                             }
                             adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewView.adapter = adapter
@@ -137,10 +149,19 @@ class HomeFragment : Fragment() {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesPopularAdapter { idCarrier ->
+                            val adapter = MoviesPopularAdapter { detailCarrier ->
                                 val mBundle = Bundle()
-                                mBundle.putInt(ID2, idCarrier.id)
-                                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                mBundle.putString(BACKDROP, detailCarrier.posterPath)
+                                mBundle.putString(OVERVIEW, detailCarrier.overview)
+                                mBundle.putString(TITLE, detailCarrier.title)
+                                mBundle.putDouble(POPULARITY, detailCarrier.popularity)
+                                mBundle.putInt(ID2, detailCarrier.id)
+                                if(detailCarrier.id > 0) {
+                                    findNavController().navigate(
+                                        R.id.action_homeFragment_to_detailCompose,
+                                        mBundle
+                                    )
+                                }
                             }
                             adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewPopular.adapter = adapter
@@ -185,10 +206,20 @@ class HomeFragment : Fragment() {
                     when (it.data?.code()) {
                         200 -> if (it.data.body() != null) {
                             binding.progressBar.visibility = View.GONE
-                            val adapter = MoviesUpComingAdapter { idCarrier ->
+                            val adapter = MoviesUpComingAdapter { detailCarrier ->
                                 val mBundle = Bundle()
-                                mBundle.putInt(ID3, idCarrier.id)
-                                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                mBundle.putString(BACKDROP, detailCarrier.posterPath)
+                                mBundle.putString(OVERVIEW, detailCarrier.overview)
+                                mBundle.putString(TITLE, detailCarrier.title)
+                                mBundle.putDouble(POPULARITY, detailCarrier.popularity)
+                                mBundle.putInt(ID3, detailCarrier.id)
+
+                                if(detailCarrier.id > 0) {
+                                    findNavController().navigate(
+                                        R.id.action_homeFragment_to_detailCompose,
+                                        mBundle
+                                    )
+                                }
                             }
                             adapter.submitList(it.data.body()!!.results)
                             binding.recyclerViewUpComing.adapter = adapter
