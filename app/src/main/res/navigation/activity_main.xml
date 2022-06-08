@@ -3,29 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/loginFragment">
-
+    app:startDestination="@id/loginCompose">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.farhanfarkaann.challenge5.ui.fragment.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
+        android:id="@+id/loginCompose"
+        android:name="com.farhanfarkaann.challenge5.ui.fragment.LoginCompose"
+        android:label="LoginCompose" >
         <action
-            android:id="@+id/action_loginFragment_to_registFragment"
-            app:destination="@id/registFragment" />
+            android:id="@+id/action_loginCompose_to_registCompose"
+            app:destination="@id/registCompose" />
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
+            android:id="@+id/action_loginCompose_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/registFragment"
-        android:name="com.farhanfarkaann.challenge5.ui.fragment.RegistFragment"
-        android:label="RegistFragment"
-        tools:layout="@layout/fragment_regist">
+        android:id="@+id/registCompose"
+        android:name="com.farhanfarkaann.challenge5.ui.fragment.RegisterCompose"
+        android:label="RegistFragment">
         <action
-            android:id="@+id/action_registFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_registCompose_to_loginCompose"
+            app:destination="@id/loginCompose" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -34,7 +32,7 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginCompose" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -58,14 +56,18 @@
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_profileFragment_to_loginFragment2"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginCompose" />
         <argument
             android:name="user"
             app:argType="com.farhanfarkaann.challenge5.data.room.entity.User" />
+        <action
+            android:id="@+id/action_profileFragment_to_hilt_LoginCompose3"
+            app:destination="@id/loginCompose" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.farhanfarkaann.challenge5.ui.fragment.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
+
 </navigation>
