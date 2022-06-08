@@ -36,15 +36,15 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
         <argument
             android:name="username"
             app:argType="string" />
         <argument
             android:name="password"
             app:argType="string" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailCompose"
+            app:destination="@id/detailCompose" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -64,10 +64,14 @@
             android:id="@+id/action_profileFragment_to_hilt_LoginCompose3"
             app:destination="@id/loginCompose" />
     </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/detailFragment"-->
+<!--        android:name="com.farhanfarkaann.challenge5.ui.fragment.DetailFragment"-->
+<!--        android:label="fragment_detail"-->
+<!--        tools:layout="@layout/fragment_detail" />-->
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.farhanfarkaann.challenge5.ui.fragment.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        android:id="@+id/detailCompose"
+        android:name="com.farhanfarkaann.challenge5.ui.fragment.DetailCompose"
+        android:label="DetailCompose" />
 
 </navigation>
