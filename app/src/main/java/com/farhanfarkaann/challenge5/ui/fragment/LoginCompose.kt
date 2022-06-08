@@ -76,31 +76,30 @@ class LoginCompose : Fragment() {
         }
     }
 /////////////////////////////////
-    
-@Composable
-fun HeaderLogin() {
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Login", fontSize = 36.sp)
-        Spacer(modifier = Modifier.height(16.dp))
-        Image(
-            painter = painterResource(id = R.drawable.ic_undraw_working_late_pukg),
-            contentDescription = "Image App",
-            modifier = Modifier.size(300.dp, 150.dp),
-            contentScale = ContentScale.Crop
-        )
+
+    @Composable
+    fun HeaderLogin() {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Login", fontSize = 36.sp)
+            Spacer(modifier = Modifier.height(16.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_undraw_working_late_pukg),
+                contentDescription = "Image App",
+                modifier = Modifier.size(300.dp, 150.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
     }
-}
-
-
-
-
 
 
     @Composable
     fun ActionItem() {
 
         var username by remember { mutableStateOf("") }
-        var password by  remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
         var passwordVisibility by remember { mutableStateOf(false) }
 
         Column(
@@ -154,8 +153,6 @@ fun HeaderLogin() {
             )
 
 
-
-
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -173,7 +170,8 @@ fun HeaderLogin() {
                                 dialog.dismiss()
                             }
                             .show()
-                    }else{
+                    } else {
+
                         authViewModel.login(username, password)
                         authViewModel.resultLogin.observe(viewLifecycleOwner) { user ->
                             if (user == null) {
@@ -215,14 +213,12 @@ fun HeaderLogin() {
             Text(
                 text = "Belum Pnya Akun",
                 modifier = Modifier.clickable(
-                    onClick = {findNavController().navigate(R.id.action_loginCompose_to_registCompose)}),
+                    onClick = { findNavController().navigate(R.id.action_loginCompose_to_registCompose) }),
                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
                 color = Color.DarkGray
 
             )
         }
-
-
     }
 
 
@@ -234,11 +230,7 @@ fun HeaderLogin() {
             Column {
                 HeaderLogin()
                 ActionItem()
-
             }
-
         }
     }
-
-
 }

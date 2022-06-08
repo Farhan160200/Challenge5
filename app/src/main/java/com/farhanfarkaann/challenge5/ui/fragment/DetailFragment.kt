@@ -57,10 +57,7 @@ class DetailFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun getDetail() {
         val apiKey  = "a6e717a2fd3abac91324810090ae62ff"
-
         val bundle = arguments
-
-
         val idTopRated = bundle?.getInt(ID)
         val idPopular = bundle?.getInt(ID2)
         val idUpComing = bundle?.getInt(ID3)
