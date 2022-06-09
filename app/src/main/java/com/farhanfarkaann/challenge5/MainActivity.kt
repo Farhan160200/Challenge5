@@ -10,5 +10,6 @@ class MainActivity : AppCompatActivity() {
         // main activity
         // commit new
         //testing ci
+        // testing ci 2
     }
 }
